@@ -5,13 +5,16 @@
  *      Author: Filipe
  */
 
+/*
+ * grafo.cpp
+ *
+ *  Created on: 22/04/2015
+ *      Author: Filipe
+ */
 
 #include "grafo.h"
 
-int main() {
-	cout << "Treta\n";
-	return 0;
-}
+#include<iostream>
 
 Edge::Edge(Vertex*d, double w) :
 		dest(d), weight(w) {
@@ -21,7 +24,7 @@ void Vertex::removeVertex(const long & in) {
 
 	for (size_t i = 0; i < adj.size(); i++) {
 
-		if (*(adj[i].dest) == in) {
+		if (*(adj[i].getDest()) == in) {
 
 			adj.erase(adj.begin() + i);
 			i -= 2;
@@ -30,7 +33,7 @@ void Vertex::removeVertex(const long & in) {
 }
 
 bool operator==(Vertex lhs, Vertex rhs) {
-	if (lhs.id == rhs.id)
+	if (lhs.getId() == rhs.getId())
 		return true;
 	else
 		return false;
@@ -43,7 +46,7 @@ Vertex::Vertex(long in) :
 vector<long> Graph::bfs(Vertex * v) const {
 	vector<long> answer;
 	Vertex *check;
-	queue<Vertex*> fila;
+	queue<Vertex *> fila;
 //quem queremos visitar por ordem de aparencia e não ir a um e visitar todos os descendentes desse
 	fila.push(v);
 	do {
@@ -52,8 +55,8 @@ vector<long> Graph::bfs(Vertex * v) const {
 		answer.push_back(check->id);
 		check->visited = true;
 		for (size_t j = 0; j < check->adj.size(); j++) {
-			if (!check->adj[j].dest->visited) {
-				fila.push(check->adj[j].dest);
+			if (!check->adj[j].getDest()->visited) {
+				fila.push(check->adj[j].getDest());
 			}
 		}
 	} while (!fila.empty());
@@ -128,7 +131,7 @@ bool Graph::addEdge(const long & sourc, const long & dest, double w) {
 
 Vertex * Graph::findVertex(const long &info) {
 	for (size_t i = 0; i < vertexSet.size(); i++) {
-		if (vertexSet[i]->id == info) {
+		if (vertexSet[i]->getId() == info) {
 			return vertexSet[i];
 		}
 	}
@@ -145,7 +148,7 @@ bool Graph::removeEdge(const long &sourc, const long &dest) {
 
 	vector<Edge> e = source->adj;
 	for (size_t i = 0; i < e.size(); i++) {
-		if (*e[i].dest == *destiny) {
+		if (*e[i].getDest() == *destiny) {
 
 			source->adj.erase(source->adj.begin() + i);
 			e = source->adj;
@@ -182,4 +185,8 @@ int Graph::getNumVertex() const {
 
 vector<Vertex *> Graph::getVertexSet() const {
 	return vertexSet;
+}
+int main() {
+	cout << "Treta\n";
+	return 0;
 }

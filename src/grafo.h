@@ -18,6 +18,23 @@ class Edge {
 	double weight;
 public:
 	Edge(Vertex *d, double w);
+
+	const Vertex* getDest() const {
+		return dest;
+	}
+
+	void setDest(Vertex* dest) {
+		this->dest = dest;
+	}
+
+	double getWeight() const {
+		return weight;
+	}
+
+	void setWeight(double weight) {
+		this->weight = weight;
+	}
+
 	friend class Graph;
 	friend class Vertex;
 
@@ -34,9 +51,27 @@ public:
 	long getId() {
 		return id;
 	}
+
+	const vector<Edge>& getAdj() const {
+		return adj;
+	}
+
+	void setAdj(const vector<Edge>& adj) {
+		this->adj = adj;
+	}
+
+	void setId(long id) {
+		this->id = id;
+	}
+
+	bool isVisited() const {
+		return visited;
+	}
+
+	void setVisited(bool visited) {
+		this->visited = visited;
+	}
 };
-
-
 
 class Graph {
 	vector<Vertex *> vertexSet;
