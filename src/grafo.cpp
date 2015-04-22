@@ -43,6 +43,7 @@ Vertex::Vertex(long in) :
 		id(in), visited(false) {
 }
 
+
 vector<long> Graph::bfs(Vertex * v) const {
 	vector<long> answer;
 	Vertex *check;
