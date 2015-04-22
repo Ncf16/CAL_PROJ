@@ -37,6 +37,8 @@ class Vertex {
 	long id;
 	vector<Edge> adj;
 	bool visited;
+	long lat;
+	long lon;
 public:
 	Vertex(long in);
 	friend class Graph;
@@ -45,15 +47,28 @@ public:
 	long getId() {
 		return id;
 	}
-	vector<Edge>& getAdj() const {
+	void setId(long id) {
+		this->id = id;
+	}
+	long getLat() {
+		return lat;
+	}
+	long getLon() {
+		return lon;
+	}
+	void setLat(long lat) {
+		this->lat = lat;
+	}
+	void setLon(long lon) {
+		this->lon = lon;
+	}
+	vector<Edge>& getAdj() {
 		return adj;
 	}
 	void setAdj(const vector<Edge>& adj) {
 		this->adj = adj;
 	}
-	void setId(long id) {
-		this->id = id;
-	}
+
 	bool isVisited() const {
 		return visited;
 	}

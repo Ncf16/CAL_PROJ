@@ -32,7 +32,7 @@ bool operator==(Vertex lhs, Vertex rhs) {
 		return false;
 }
 Vertex::Vertex(long in) :
-		id(in), visited(false) {
+		id(in), visited(false), lat(0), lon(0) {
 }
 vector<long> Graph::bfs(Vertex * v) const {
 	vector<long> answer;
@@ -157,7 +157,4 @@ int Graph::getNumVertex() const {
 vector<Vertex *> Graph::getVertexSet() const {
 	return vertexSet;
 }
-int main() {
-	cout << "Treta\n";
-	return 0;
-}
+

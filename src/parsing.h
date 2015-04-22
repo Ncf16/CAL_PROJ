@@ -7,5 +7,11 @@
 
 #ifndef SRC_PARSING_H_
 #define SRC_PARSING_H_
+#include <string>
+#include <iostream>
+#include <sstream>
+#include <fstream>
+using namespace std;
 
+string load(string fileName);
 #endif /* SRC_PARSING_H_ */
