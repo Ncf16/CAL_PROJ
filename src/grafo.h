@@ -4,9 +4,9 @@
  *  Created on: 22/04/2015
  *      Author: Filipe
  */
-
 #ifndef SRC_GRAFO_H_
 #define SRC_GRAFO_H_
+
 #include <vector>
 #include <queue>
 using namespace std;
@@ -18,26 +18,20 @@ class Edge {
 	double weight;
 public:
 	Edge(Vertex *d, double w);
-
 	Vertex* getDest() const {
 		return dest;
 	}
-
 	void setDest(Vertex* dest) {
 		this->dest = dest;
 	}
-
 	double getWeight() const {
 		return weight;
 	}
-
 	void setWeight(double weight) {
 		this->weight = weight;
 	}
-
 	friend class Graph;
 	friend class Vertex;
-
 };
 class Vertex {
 	long id;
@@ -51,23 +45,18 @@ public:
 	long getId() {
 		return id;
 	}
-
-	const vector<Edge>& getAdj() const {
+	vector<Edge>& getAdj() const {
 		return adj;
 	}
-
 	void setAdj(const vector<Edge>& adj) {
 		this->adj = adj;
 	}
-
 	void setId(long id) {
 		this->id = id;
 	}
-
 	bool isVisited() const {
 		return visited;
 	}
-
 	void setVisited(bool visited) {
 		this->visited = visited;
 	}
@@ -89,5 +78,4 @@ public:
 	vector<long> bfs(Vertex * v) const;
 	void bfs(vector<long> &vec, Vertex * v) const;
 };
-
 #endif /* SRC_GRAFO_H_ */

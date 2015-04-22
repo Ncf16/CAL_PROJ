@@ -11,43 +11,33 @@
  *  Created on: 22/04/2015
  *      Author: Filipe
  */
-
 #include "grafo.h"
-
 #include<iostream>
 
 Edge::Edge(Vertex*d, double w) :
 		dest(d), weight(w) {
 }
-
 void Vertex::removeVertex(const long & in) {
-
 	for (size_t i = 0; i < adj.size(); i++) {
-
 		if (*(adj[i].getDest()) == in) {
-
 			adj.erase(adj.begin() + i);
 			i -= 2;
 		}
 	}
 }
-
 bool operator==(Vertex lhs, Vertex rhs) {
 	if (lhs.getId() == rhs.getId())
 		return true;
 	else
 		return false;
 }
-
 Vertex::Vertex(long in) :
 		id(in), visited(false) {
 }
-
 vector<long> Graph::bfs(Vertex * v) const {
 	vector<long> answer;
 	Vertex *check;
 	queue<Vertex *> fila;
-//quem queremos visitar por ordem de aparencia e não ir a um e visitar todos os descendentes desse
 	fila.push(v);
 	do {
 		check = fila.front();
@@ -63,23 +53,17 @@ vector<long> Graph::bfs(Vertex * v) const {
 
 	return answer;
 }
-
 vector<long> Graph::dfs() const {
 
 	vector<long> answer;
 	for (size_t i = 0; i < vertexSet.size(); i++) {
 		if (!vertexSet[i]->visited) {
-
 			dfs(answer, vertexSet[i]);
 		}
-
 	}
-
 	return answer;
 }
-
 void Graph::dfs(vector<long> &vec, Vertex* v) const {
-
 	v->visited = true;
 	vec.push_back(v->id);
 
@@ -89,12 +73,9 @@ void Graph::dfs(vector<long> &vec, Vertex* v) const {
 		}
 	}
 }
-
 int Graph::getEdgeSize(const long &inf) {
 	Vertex *source = findVertex(inf);
-
 	return source->adj.size();
-
 }
 
 bool Graph::removeVertex(const long &in) {
@@ -110,7 +91,6 @@ bool Graph::removeVertex(const long &in) {
 			i -= 2;
 		} else
 			vertexSet[i]->removeVertex(in);
-
 	}
 	return true;
 }
@@ -122,11 +102,9 @@ bool Graph::addEdge(const long & sourc, const long & dest, double w) {
 
 	if (source == NULL || destiny == NULL)
 		return false;
-
 	Edge e(destiny, w);
 	source->adj.push_back(e);
 	return true;
-
 }
 
 Vertex * Graph::findVertex(const long &info) {
@@ -137,29 +115,24 @@ Vertex * Graph::findVertex(const long &info) {
 	}
 	return NULL;
 }
-
 bool Graph::removeEdge(const long &sourc, const long &dest) {
 	bool found = false;
 	Vertex *source = findVertex(sourc);
 	Vertex *destiny = findVertex(dest);
-
 	if (source == NULL || destiny == NULL)
 		return false;
 
 	vector<Edge> e = source->adj;
 	for (size_t i = 0; i < e.size(); i++) {
 		if (*e[i].getDest() == *destiny) {
-
 			source->adj.erase(source->adj.begin() + i);
 			e = source->adj;
 			i -= 2;
 			found = true;
 		}
 	}
-
 	return found;
 }
-
 bool Graph::addVertex(const long &in) {
 	if (getNumVertex() == 0) {
 		vertexSet.push_back(new Vertex(in));
@@ -170,10 +143,8 @@ bool Graph::addVertex(const long &in) {
 			if (vertexSet[i]->id == in) {
 				return false;
 			}
-
 		}
 	}
-
 	vertexSet.push_back(new Vertex(in));
 	vertexSet[vertexSet.size() - 1]->visited = false;
 	return true;
