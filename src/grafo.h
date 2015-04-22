@@ -19,7 +19,7 @@ class Edge {
 public:
 	Edge(Vertex *d, double w);
 
-	const Vertex* getDest() const {
+	Vertex* getDest() const {
 		return dest;
 	}
 
