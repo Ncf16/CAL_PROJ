@@ -4,13 +4,6 @@
  *  Created on: 22/04/2015
  *      Author: Filipe
  */
-
-/*
- * grafo.cpp
- *
- *  Created on: 22/04/2015
- *      Author: Filipe
- */
 #include "grafo.h"
 #include<iostream>
 
@@ -33,6 +26,10 @@ bool operator==(Vertex lhs, Vertex rhs) {
 }
 Vertex::Vertex(long in) :
 		id(in), visited(false), lat(0), lon(0) {
+}
+
+Vertex::Vertex(long in, long long lat, long long lon) :
+		id(in), visited(false), lat(lat), lon(lon) {
 }
 vector<long> Graph::bfs(Vertex * v) const {
 	vector<long> answer;
@@ -107,6 +104,20 @@ bool Graph::addEdge(const long & sourc, const long & dest, double w) {
 	return true;
 }
 
+bool Graph::addEdge(const long & sourc, const long & dest, double w, long id) {
+
+	Vertex *source = findVertex(sourc);
+	Vertex *destiny = findVertex(dest);
+
+	if (source == NULL || destiny == NULL)
+		return false;
+	Edge e(destiny, w);
+	e.id = id;
+	source->adj.push_back(e);
+
+	return true;
+}
+
 Vertex * Graph::findVertex(const long &info) {
 	for (size_t i = 0; i < vertexSet.size(); i++) {
 		if (vertexSet[i]->getId() == info) {
@@ -158,3 +169,31 @@ vector<Vertex *> Graph::getVertexSet() const {
 	return vertexSet;
 }
 
+bool Graph::addVertex(Vertex *v) {
+	if (getNumVertex() == 0) {
+		vertexSet.push_back(v);
+		return true;
+	} else {
+		for (size_t i = 0; i < vertexSet.size(); i++) {
+			if (vertexSet[i] == v) {
+				return false;
+			}
+		}
+	}
+
+	return true;
+
+}
+bool Graph::addEdge(Edge e) {
+
+	e.orig->adj.push_back(e);
+
+	//tentar adicionar ou tentar encontrar, ver como fazer + eficiente
+}
+//ter id ou não
+Edge::Edge(Vertex *org, Vertex *d, double w, long long id) {
+	this->dest = d;
+	this->orig = org;
+	this->weight = w;
+	this->id = id;
+}

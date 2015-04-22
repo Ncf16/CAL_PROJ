@@ -10,14 +10,18 @@
 #include <vector>
 #include <queue>
 using namespace std;
+
 class Graph;
 class Vertex;
 
 class Edge {
+	Vertex *orig;
 	Vertex * dest;
 	double weight;
+	long long id;
 public:
 	Edge(Vertex *d, double w);
+	Edge(Vertex *orig, Vertex*d, double w,long long id);
 	Vertex* getDest() const {
 		return dest;
 	}
@@ -33,14 +37,16 @@ public:
 	friend class Graph;
 	friend class Vertex;
 };
+
 class Vertex {
 	long id;
 	vector<Edge> adj;
 	bool visited;
-	long lat;
-	long lon;
+	long long lat;
+	long long lon;
 public:
 	Vertex(long in);
+	Vertex(long in, long long lat, long long lon);
 	friend class Graph;
 	friend bool operator==(Vertex lhs, Vertex rhs);
 	void removeVertex(const long & in);
@@ -50,16 +56,16 @@ public:
 	void setId(long id) {
 		this->id = id;
 	}
-	long getLat() {
+	long long getLat() {
 		return lat;
 	}
-	long getLon() {
+	long long getLon() {
 		return lon;
 	}
-	void setLat(long lat) {
+	void setLat(long long lat) {
 		this->lat = lat;
 	}
-	void setLon(long lon) {
+	void setLon(long long lon) {
 		this->lon = lon;
 	}
 	vector<Edge>& getAdj() {
@@ -83,7 +89,10 @@ public:
 	vector<Vertex *> getVertexSet() const;
 	int getNumVertex() const;
 	bool addVertex(const long & in);
+	bool addVertex(Vertex * v);
+	bool addEdge(Edge e);
 	bool addEdge(const long & sourc, const long & dest, double w);
+	bool addEdge(const long & sourc, const long & dest, double w, const long idEdge);
 	Vertex * findVertex(const long &info);
 	bool removeVertex(const long &in);
 	bool removeEdge(const long &sourc, const long &dest);
