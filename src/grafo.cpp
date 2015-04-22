@@ -56,7 +56,7 @@ vector<long> Graph::bfs(Vertex * v) const {
 		check->visited = true;
 		for (size_t j = 0; j < check->adj.size(); j++) {
 			if (!check->adj[j].getDest()->visited) {
-				fila.push(check->adj[j].getDest());
+				fila.push((Vertex*)check->adj[j].getDest());
 			}
 		}
 	} while (!fila.empty());
