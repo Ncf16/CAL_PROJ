@@ -197,3 +197,36 @@ Edge::Edge(Vertex *org, Vertex *d, double w, long long id) {
 	this->weight = w;
 	this->id = id;
 }
+
+
+long long Graph::getMaxLat() const {
+	return maxLat;
+}
+
+void Graph::setMaxLat(long long maxLat) {
+	this->maxLat = maxLat;
+}
+
+long long Graph::getMaxLon() const {
+	return maxLon;
+}
+
+void Graph::setMaxLon(long long maxLon) {
+	this->maxLon = maxLon;
+}
+
+long long Graph::getMinLat() const {
+	return minLat;
+}
+
+void Graph::setMinLat(long long minLat) {
+	this->minLat = minLat;
+}
+
+long long Graph::getMinLon() const {
+	return minLon;
+}
+
+void Graph::setMinLon(long long minLon) {
+	this->minLon = minLon;
+}

@@ -19,10 +19,7 @@ class Edge {
 	Vertex * dest;
 	double weight;
 	long long id;
-	long long minLat;
-	long long maxLat;
-	long long minLon;
-	long long maxLon;
+
 public:
 	Edge(Vertex *d, double w);
 	Edge(Vertex *orig, Vertex*d, double w, long long id);
@@ -89,6 +86,10 @@ public:
 
 class Graph {
 	vector<Vertex *> vertexSet;
+	long long minLat;
+	long long maxLat;
+	long long minLon;
+	long long maxLon;
 public:
 	vector<Vertex *> getVertexSet() const;
 	int getNumVertex() const;
@@ -96,7 +97,8 @@ public:
 	bool addVertex(Vertex * v);
 	bool addEdge(Edge e);
 	bool addEdge(const long & sourc, const long & dest, double w);
-	bool addEdge(const long & sourc, const long & dest, double w, const long idEdge);
+	bool addEdge(const long & sourc, const long & dest, double w,
+			const long idEdge);
 	Vertex * findVertex(const long &info);
 	bool removeVertex(const long &in);
 	bool removeEdge(const long &sourc, const long &dest);
@@ -105,5 +107,21 @@ public:
 	void dfs(vector<long> &vec, Vertex * v) const;
 	vector<long> bfs(Vertex * v) const;
 	void bfs(vector<long> &vec, Vertex * v) const;
+
+	long long getMaxLat() const;
+
+	void setMaxLat(long long maxLat);
+
+	long long getMaxLon() const;
+
+	void setMaxLon(long long maxLon);
+
+	long long getMinLat() const;
+
+	void setMinLat(long long minLat);
+
+	long long getMinLon() const;
+
+	void setMinLon(long long minLon);
 };
 #endif /* SRC_GRAFO_H_ */

@@ -15,10 +15,6 @@ class fibra {
 private:
 	Graph rede;
 	list<Vertex> centrais;
-	long long latMin;
-	long long latMax;
-	long long lonMin;
-	long long lonMax;
 public:
 	bool menu();
 	void load();

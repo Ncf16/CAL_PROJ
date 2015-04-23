@@ -25,12 +25,10 @@ double rad2deg(double rad) {
 	return (rad * 180 / PI);
 }
 
+void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
+		Graph &grafo) {
+	ifstream nodeRead, roadRead, edgeRead;
 
-void loadParse(char * edgeFileName, char * nodeFileName, char * roadFile, Graph &grafo) {
-	ifstream edgeRead, nodeRead, roadRead;
-	nodeRead.open(nodeFileName);
-	edgeRead.open(edgeFileName);
-	roadRead.open(roadFile);
 	long long idSource;
 	long long idEdge;
 	long long idDest;
@@ -45,7 +43,22 @@ void loadParse(char * edgeFileName, char * nodeFileName, char * roadFile, Graph 
 	set<Vertex*, comparableVertex>::iterator it;
 	set<Vertex*, comparableVertex>::iterator ite;
 
-	if ((!nodeRead.fail()) && (!edgeRead.fail()) && (!roadRead.fail())) {
+	//OPENING THE MAP FILES
+	nodeRead.open(nodeFileName);
+	roadRead.open(roadFile);
+	edgeRead.open(edgeFileName);
+
+	if (((!roadRead.fail()) && (!edgeRead.fail()) && !nodeRead.fail())) {
+
+		//READING NODE FILE
+		getline(nodeRead, s, ';');
+		grafo.
+		getline(nodeRead, s, ';');
+		lat = atol(s);
+		getline(nodeRead, s, ';');
+		lon = atol(s);
+		getline(nodeRead, s, '\n');
+
 		while (!nodeRead.eof()) {
 			getline(nodeRead, s, ';');
 			idNode = atol(s);
@@ -57,6 +70,9 @@ void loadParse(char * edgeFileName, char * nodeFileName, char * roadFile, Graph 
 			//acrescentar directamente ou após input
 			setVertex.insert(new Vertex(idNode, lat, lon));
 		}
+		//READING ROAD FILE
+
+		//READING EDGE FILE
 		it = setVertex.begin();
 		ite = setVertex.end();
 
@@ -76,7 +92,8 @@ void loadParse(char * edgeFileName, char * nodeFileName, char * roadFile, Graph 
 			if (it == ite)
 				break;
 			//find aos vertex
-			int peso = distance(org->getLat(), org->getLon(), dest->getLat(), dest->getLon());
+			int peso = distance(org->getLat(), org->getLon(), dest->getLat(),
+					dest->getLon());
 			Edge e(org, dest, peso, idEdge);
 
 			setEdge.insert(e);
@@ -84,6 +101,7 @@ void loadParse(char * edgeFileName, char * nodeFileName, char * roadFile, Graph 
 			//grafo.addVertex(idDest);
 			//grafo.addEdge(idSource, idDest, distance(1, 1, 1, 1), idEdge);
 		}
+
 	} else {
 		cout << "The files you tried to open don´t exist\n";
 	}
@@ -95,7 +113,8 @@ void loadParse(char * edgeFileName, char * nodeFileName, char * roadFile, Graph 
 double distance(double lat1, double lon1, double lat2, double lon2) {
 	double theta, dist;
 	theta = lon1 - lon2;
-	dist = sin(deg2rad(lat1)) * sin(deg2rad(lat2)) + cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * cos(deg2rad(theta));
+	dist = sin(deg2rad(lat1)) * sin(deg2rad(lat2))
+			+ cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * cos(deg2rad(theta));
 	dist = acos(dist);
 	dist = rad2deg(dist);
 	dist = dist * 60 * 1.1515;
@@ -103,7 +122,7 @@ double distance(double lat1, double lon1, double lat2, double lon2) {
 }
 int main() {
 	Graph p;
-	loadParse("files/tond3.txt", "files/tond1.txt", "files/tond2.txt", p);
+	loadParse("files/small1.txt", "files/small2.txt", "files/small3.txt", p);
 	return 0;
 }
 
