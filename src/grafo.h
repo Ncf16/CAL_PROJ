@@ -17,6 +17,7 @@ class Vertex;
 class Edge {
 	Vertex *orig;
 	Vertex * dest;
+	string nome;
 	double weight;
 	long long id;
 

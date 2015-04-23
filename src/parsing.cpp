@@ -9,6 +9,7 @@
 #include "compare.h"
 #include <math.h>
 #include <list>
+#include <map>
 
 long long atol(string s) {
 	long long n = 0;
@@ -35,28 +36,27 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
 	long long lat;
 	long long lon;
 	long long idNode;
+	string roadName;
 	string s;
-	set<Vertex*, comparableVertex> setVertex;
+	map<int, Vertex*> vertexMap;
+	map<int, string> tempRoadMap;
 	set<Edge, comparableEdge> setEdge;
 	set<edgeTemp, comparableEdgeTemp> setEdgeTemp;
 
 	set<Vertex*, comparableVertex>::iterator it;
 	set<Vertex*, comparableVertex>::iterator ite;
 
-	//OPENING THE MAP FILES
+	//READING NODE FILE
 	nodeRead.open(nodeFileName);
-	roadRead.open(roadFile);
-	edgeRead.open(edgeFileName);
-
-	if (((!roadRead.fail()) && (!edgeRead.fail()) && !nodeRead.fail())) {
-
-		//READING NODE FILE
+	if (!nodeRead.fail) {
 		getline(nodeRead, s, ';');
-		grafo.
+		grafo.setMinLat(atol(s));
 		getline(nodeRead, s, ';');
-		lat = atol(s);
+		grafo.setMaxLat(atol(s));
 		getline(nodeRead, s, ';');
-		lon = atol(s);
+		grafo.setMinLon(atol(s));
+		getline(nodeRead, s, ';');
+		grafo.setMaxLon(atol(s));
 		getline(nodeRead, s, '\n');
 
 		while (!nodeRead.eof()) {
@@ -68,14 +68,37 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
 			lon = atol(s);
 			getline(nodeRead, s, '\n');
 			//acrescentar directamente ou após input
-			setVertex.insert(new Vertex(idNode, lat, lon));
+			vertexMap.insert(
+					pair<int, Vertex*>(idNode, new Vertex(idNode, lat, lon)));
 		}
-		//READING ROAD FILE
+	} else {
+		cout << "Node file unexistent.\n";
+	}
+	nodeRead.close();
 
-		//READING EDGE FILE
-		it = setVertex.begin();
-		ite = setVertex.end();
+	//READING ROAD FILE
+	roadRead.open(roadFile);
+	if (!roadRead.fail) {
+		while (!roadRead.eof()) {
+			getline(roadRead, s, ';');
+			idEdge = atol(s);
+			getline(roadRead, s, ';');
+			roadName = s;
+			getline(roadRead, s, ';');
+			//Does nothing. We do not need the true/false line
+			getline(roadRead, s, '\n');
+			tempRoadMap.insert(
+								pair<int, string>(idNode, roadName));
+		}
+	} else {
+		cout << "Road file unexistent.\n";
+	}
+	roadRead.close();
 
+
+	//READING EDGE FILE
+	edgeRead.open(edgeFileName);
+	if (!edgeRead.fail) {
 		while (!edgeRead.eof()) {
 			//add edges
 			getline(edgeRead, s, ';');
@@ -101,13 +124,12 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
 			//grafo.addVertex(idDest);
 			//grafo.addEdge(idSource, idDest, distance(1, 1, 1, 1), idEdge);
 		}
-
 	} else {
-		cout << "The files you tried to open don´t exist\n";
+		cout << "Edge file unexistent.\n";
 	}
-	cout << setEdge.size() << endl << setVertex.size() << endl;
 	edgeRead.close();
-	nodeRead.close();
+
+	cout << setEdge.size() << endl << vertexMap.size() << endl;
 }
 //ver link
 double distance(double lat1, double lon1, double lat2, double lon2) {
