@@ -25,10 +25,7 @@ double rad2deg(double rad) {
 	return (rad * 180 / PI);
 }
 
-typedef struct {
-	long long id;
-	string nome;
-} edgeTemp;
+
 void loadParse(char * edgeFileName, char * nodeFileName, char * roadFile, Graph &grafo) {
 	ifstream edgeRead, nodeRead, roadRead;
 	nodeRead.open(nodeFileName);
@@ -81,6 +78,7 @@ void loadParse(char * edgeFileName, char * nodeFileName, char * roadFile, Graph 
 			//find aos vertex
 			int peso = distance(org->getLat(), org->getLon(), dest->getLat(), dest->getLon());
 			Edge e(org, dest, peso, idEdge);
+
 			setEdge.insert(e);
 			//grafo.addVertex(idSource);
 			//grafo.addVertex(idDest);

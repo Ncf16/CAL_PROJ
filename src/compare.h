@@ -1,9 +1,14 @@
 /*
+
  * compare.h
  *
  *  Created on: 23/04/2015
  *      Author: Filipe
  */
+typedef struct {
+	long long id;
+	string nome;
+} edgeTemp;
 
 typedef struct {
 	bool operator()(const Vertex * s, const Vertex *v) {
