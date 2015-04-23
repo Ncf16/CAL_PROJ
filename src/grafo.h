@@ -21,7 +21,7 @@ class Edge {
 	long long id;
 public:
 	Edge(Vertex *d, double w);
-	Edge(Vertex *orig, Vertex*d, double w,long long id);
+	Edge(Vertex *orig, Vertex*d, double w, long long id);
 	Vertex* getDest() const {
 		return dest;
 	}
@@ -39,7 +39,7 @@ public:
 };
 
 class Vertex {
-	long id;
+	long long id;
 	vector<Edge> adj;
 	bool visited;
 	long long lat;
@@ -50,7 +50,7 @@ public:
 	friend class Graph;
 	friend bool operator==(Vertex lhs, Vertex rhs);
 	void removeVertex(const long & in);
-	long getId() {
+	long long getId() const {
 		return id;
 	}
 	void setId(long id) {

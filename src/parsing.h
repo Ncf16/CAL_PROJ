@@ -14,14 +14,12 @@
 #include <stdlib.h>
 #include "grafo.h"
 #include <math.h>
-#include <list>
+#include <set>
 
-using namespace std;
-
-#define PI 3.14159265358979323846
+#define PI acos(-1)
 long long atol(string s);
 double deg2rad(double deg);
 double rad2deg(double rad);
 double distance(double lat1, double lon1, double lat2, double lon2);
-string load(string fileName);
+void loadParse(char * edgeFileName, char * nodeFileName, Graph &grafo);
 #endif /* SRC_PARSING_H_ */
