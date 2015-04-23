@@ -19,6 +19,10 @@ class Edge {
 	Vertex * dest;
 	double weight;
 	long long id;
+	long long minLat;
+	long long maxLat;
+	long long minLon;
+	long long maxLon;
 public:
 	Edge(Vertex *d, double w);
 	Edge(Vertex *orig, Vertex*d, double w, long long id);
