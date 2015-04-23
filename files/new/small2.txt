@@ -1,0 +1,125 @@
+13746532;West Fields;False
+23058247;;False
+23058253;;False
+23058286;;False
+23058268;Castlegate;False
+23058249;Church Street;False
+23058255;;False
+23058267;Park Lane;False
+23058250;Piercy End;False
+23058264;Rivis Square;False
+53026765;West Lund;False
+53026764;Gawtersike Lane;False
+53026178;High Market Place;False
+53026185;Swineherd Lane;False
+53063094;Tinley Garth;False
+53026177;Tinley Garth;False
+81233195;;False
+81233205;Oxcroft;False
+81233206;Dove Way;False
+81233153;;False
+81233154;;False
+81233160;;False
+81233166;;False
+81233178;Manor Close;False
+81233191;;False
+81233192;;False
+81233198;;False
+81233208;;False
+81233212;;False
+81233214;;False
+81233221;;False
+53026176;Market Place;False
+81233186;Cedar Vale;False
+81233194;Parkers Mount;False
+81233177;Amble Close;False
+81233164;Manor Vale Lane;False
+81233155;Neville Walk;False
+81233200;West Field Mews;False
+81233169;Manor Gardens;False
+81233161;Oxcroft;False
+53026182;Howe End;False
+81233170;Wainds Field;False
+81233219;Keld Head Orchard;False
+81233220;Waydale Close;False
+81233162;Springfield Lane;False
+81233211;Ripley Close;False
+81233167;West Lund;False
+81233203;Lime Chase;False
+81233168;Ryedale Crescent;False
+81233217;Feversham Drive;False
+81233159;Carter Lane;False
+81233204;West Field Mews;False
+81233196;Duna Way;False
+81233165;Tinley Gardens;False
+81233218;Carter Lane;False
+81233201;Keld Head Orchard;False
+81233174;Ash Grove;False
+81233188;Sherbrooke Close;False
+81233157;Keld Head Orchard;False
+81233210;Eastway Close;False
+81233179;Kildare Garth;False
+81233215;Slingsby Garth;False
+81233180;West Lund Lane;False
+81233202;Stuteville Close;False
+81233171;;False
+81233185;Keld Head Road;False
+81233158;Beech Drive;False
+81233207;Queen's Way;False
+81233197;Town Farm Close;False
+81233152;Lime Chase;False
+81233172;West Pasture;False
+23058248;New Road;False
+81403243;Manor Vale Lane;False
+81403254;Oxcroft;False
+81403255;Ryedale View;False
+81403258;Crown Square;False
+81403245;Shaw Drive;False
+81233176;;False
+81233184;;False
+81233173;;False
+53026763;Ings Lane;False
+116229668;;False
+117210809;;False
+117210922;Park Lane;False
+117210823;Back of Parks Road;False
+117210813;Sinnington Cliff Road;False
+81403250;Sinnington Cliff Road;False
+61794614;Gillamoor Road;False
+135049642;Hagg Road;False
+117210908;Sinnington Cliff Road;False
+167450089;Sinnington Cliff Road;False
+53026184;Old Road;False
+81233199;Queen's Way;False
+117210850;;False
+81233209;;False
+81233193;;False
+81233181;;False
+81233163;Vivers Place;False
+81403248;West End;False
+251714506;;False
+251714508;;False
+81233183;Willow Rise;False
+81233216;Feversham Drive;False
+81233190;Poplar Avenue;False
+81403244;Brooke Close;False
+187211954;Petch Garth;False
+187211947;;False
+81233189;Yeomans Court;False
+81233187;Dove Way;False
+81233175;Dove Way;False
+225094266;;False
+225102044;Town Farm Close;False
+225102048;High Market Place;False
+225102049;Tinley Garth;False
+117210840;;False
+205998775;;False
+81233213;;False
+81403247;Oak Close;False
+53026179;Dale End;False
+230984965;;False
+230984966;Weighbridge Close;False
+230984968;Weighbridge Close;True
+230984967;Weighbridge Close;True
+286964957;;True
+117210903;Young Bank Lane;True
