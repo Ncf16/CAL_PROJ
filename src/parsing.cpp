@@ -40,11 +40,6 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
 	string s;
 	map<int, Vertex*> vertexMap;
 	map<int, string> tempRoadMap;
-	set<Edge, comparableEdge> setEdge;
-	set<edgeTemp, comparableEdgeTemp> setEdgeTemp;
-
-	set<Vertex*, comparableVertex>::iterator it;
-	set<Vertex*, comparableVertex>::iterator ite;
 
 	//READING NODE FILE
 	nodeRead.open(nodeFileName);
@@ -87,14 +82,12 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
 			getline(roadRead, s, ';');
 			//Does nothing. We do not need the true/false line
 			getline(roadRead, s, '\n');
-			tempRoadMap.insert(
-								pair<int, string>(idNode, roadName));
+			tempRoadMap.insert(pair<int, string>(idNode, roadName));
 		}
 	} else {
 		cout << "Road file unexistent.\n";
 	}
 	roadRead.close();
-
 
 	//READING EDGE FILE
 	edgeRead.open(edgeFileName);
@@ -108,28 +101,23 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
 			getline(edgeRead, s, ';');
 			idDest = atol(s);
 			getline(edgeRead, s, '\n');
-			Vertex *org = *it;
-			it++;
-			Vertex *dest = *it;
-			it++;
-			if (it == ite)
-				break;
-			//find aos vertex
+
+			string roadName = tempRoadMap.at(idEdge);
+			Vertex* org = vertexMap[idSource];
+			Vertex* dest = vertexMap[idDest];
+
 			int peso = distance(org->getLat(), org->getLon(), dest->getLat(),
 					dest->getLon());
-			Edge e(org, dest, peso, idEdge);
 
-			setEdge.insert(e);
-			//grafo.addVertex(idSource);
-			//grafo.addVertex(idDest);
-			//grafo.addEdge(idSource, idDest, distance(1, 1, 1, 1), idEdge);
+			Edge e(org, dest, roadName, peso, idEdge);
+			org->addEdge(e);
+			dest->addEdge(e);   //We assume that there is no edge where org and dest are the same node
+
 		}
 	} else {
 		cout << "Edge file unexistent.\n";
 	}
 	edgeRead.close();
-
-	cout << setEdge.size() << endl << vertexMap.size() << endl;
 }
 //ver link
 double distance(double lat1, double lon1, double lat2, double lon2) {

@@ -7,9 +7,7 @@
 #include "grafo.h"
 #include<iostream>
 
-Edge::Edge(Vertex*d, double w) :
-		dest(d), weight(w) {
-}
+
 void Vertex::removeVertex(const long & in) {
 	for (size_t i = 0; i < adj.size(); i++) {
 		if (*(adj[i].getDest()) == in) {
@@ -31,6 +29,24 @@ Vertex::Vertex(long in) :
 Vertex::Vertex(long in, long long lat, long long lon) :
 		id(in), visited(false), lat(lat), lon(lon) {
 }
+
+bool Vertex::addEdge(Edge e){
+	adj.push_back(e);
+}
+
+Edge::Edge(Vertex*d, double w) :
+		dest(d), weight(w) {
+}
+
+//ter id ou não
+Edge::Edge(Vertex *orig, Vertex*d, string name, double w, long long id){
+	this->name = name;
+	this->dest = d;
+	this->orig = orig;
+	this->weight = w;
+	this->id = id;
+}
+
 vector<long> Graph::bfs(Vertex * v) const {
 	vector<long> answer;
 	Vertex *check;
@@ -50,6 +66,7 @@ vector<long> Graph::bfs(Vertex * v) const {
 
 	return answer;
 }
+
 vector<long> Graph::dfs() const {
 
 	vector<long> answer;
@@ -190,14 +207,6 @@ bool Graph::addEdge(Edge e) {
 
 	//tentar adicionar ou tentar encontrar, ver como fazer + eficiente
 }
-//ter id ou não
-Edge::Edge(Vertex *org, Vertex *d, double w, long long id) {
-	this->dest = d;
-	this->orig = org;
-	this->weight = w;
-	this->id = id;
-}
-
 
 long long Graph::getMaxLat() const {
 	return maxLat;

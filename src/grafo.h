@@ -17,13 +17,13 @@ class Vertex;
 class Edge {
 	Vertex *orig;
 	Vertex * dest;
-	string nome;
+	string name;
 	double weight;
 	long long id;
 
 public:
 	Edge(Vertex *d, double w);
-	Edge(Vertex *orig, Vertex*d, double w, long long id);
+	Edge(Vertex *orig, Vertex*d, string name, double w, long long id);
 	Vertex* getDest() const {
 		return dest;
 	}
@@ -52,6 +52,7 @@ public:
 	friend class Graph;
 	friend bool operator==(Vertex lhs, Vertex rhs);
 	void removeVertex(const long & in);
+	bool addEdge(Edge e);
 	long long getId() const {
 		return id;
 	}
