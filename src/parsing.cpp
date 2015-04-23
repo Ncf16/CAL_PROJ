@@ -25,10 +25,15 @@ double rad2deg(double rad) {
 	return (rad * 180 / PI);
 }
 
-void loadParse(char * edgeFileName, char * nodeFileName, Graph &grafo) {
-	ifstream edgeRead, nodeRead;
+typedef struct {
+	long long id;
+	string nome;
+} edgeTemp;
+void loadParse(char * edgeFileName, char * nodeFileName, char * roadFile, Graph &grafo) {
+	ifstream edgeRead, nodeRead, roadRead;
 	nodeRead.open(nodeFileName);
 	edgeRead.open(edgeFileName);
+	roadRead.open(roadFile);
 	long long idSource;
 	long long idEdge;
 	long long idDest;
@@ -38,10 +43,12 @@ void loadParse(char * edgeFileName, char * nodeFileName, Graph &grafo) {
 	string s;
 	set<Vertex*, comparableVertex> setVertex;
 	set<Edge, comparableEdge> setEdge;
-	cout << "Indices" << endl;
+	set<Edge, comparableEdge> setEdge;
+	set<edgeTemp, comparableEdgeTemp> setEdgeTemp;
+
 	set<Vertex*, comparableVertex>::iterator it;
 	set<Vertex*, comparableVertex>::iterator ite;
-	if ((!nodeRead.fail()) && (!edgeRead.fail())) {
+	if ((!nodeRead.fail()) && (!edgeRead.fail()) && (!roadRead.fail())) {
 		while (!nodeRead.eof()) {
 			getline(nodeRead, s, ';');
 			idNode = atol(s);
@@ -99,7 +106,7 @@ double distance(double lat1, double lon1, double lat2, double lon2) {
 }
 int main() {
 	Graph p;
-	loadParse("files/tond3.txt", "files/tond1.txt", p);
+	loadParse("files/tond3.txt", "files/tond1.txt", "files/tond2.txt", p);
 	return 0;
 }
 

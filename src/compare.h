@@ -6,19 +6,20 @@
  */
 
 typedef struct {
-	bool operator()(const Vertex * s,const Vertex *v) {
-		if (s->getId() > v->getId())
-			return true;
-		else
-			return false;
+	bool operator()(const Vertex * s, const Vertex *v) {
+		return (s->getId() > v->getId());
 	}
 } comparableVertex;
 
 typedef struct {
 	bool operator()(const Edge &s, const Edge &v) {
-		if (s.getWeight() > v.getWeight())
-			return true;
-		else
-			return false;
+		return (s.getWeight() > v.getWeight());
 	}
 } comparableEdge;
+
+typedef struct {
+
+	bool operator()(const edgeTemp &e1, const edgeTemp &e2) {
+		return e1.id > e2.id;
+	}
+} comparableEdgeTemp;
