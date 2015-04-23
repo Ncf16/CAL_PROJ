@@ -43,11 +43,11 @@ void loadParse(char * edgeFileName, char * nodeFileName, char * roadFile, Graph 
 	string s;
 	set<Vertex*, comparableVertex> setVertex;
 	set<Edge, comparableEdge> setEdge;
-	set<Edge, comparableEdge> setEdge;
 	set<edgeTemp, comparableEdgeTemp> setEdgeTemp;
 
 	set<Vertex*, comparableVertex>::iterator it;
 	set<Vertex*, comparableVertex>::iterator ite;
+
 	if ((!nodeRead.fail()) && (!edgeRead.fail()) && (!roadRead.fail())) {
 		while (!nodeRead.eof()) {
 			getline(nodeRead, s, ';');
@@ -101,7 +101,6 @@ double distance(double lat1, double lon1, double lat2, double lon2) {
 	dist = acos(dist);
 	dist = rad2deg(dist);
 	dist = dist * 60 * 1.1515;
-
 	return dist * 1.609344;
 }
 int main() {

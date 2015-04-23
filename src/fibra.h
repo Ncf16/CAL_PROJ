@@ -15,6 +15,10 @@ class fibra {
 private:
 	Graph rede;
 	list<Vertex> centrais;
+	long long latMin;
+	long long latMax;
+	long long lonMin;
+	long long lonMax;
 public:
 	bool menu();
 	void load();
@@ -23,10 +27,7 @@ public:
 void clearBuffer() {
 	fflush(stdin);
 }
-
 void cleanScreen() {
 	system("cls");
-
 }
-
 #endif /* SRC_FIBRA_H_ */
