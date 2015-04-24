@@ -21,11 +21,12 @@ bool operator==(Vertex lhs, Vertex rhs) {
 	else
 		return false;
 }
+
 Vertex::Vertex(long in) :
 		id(in), visited(false), lat(0), lon(0) {
 }
 
-Vertex::Vertex(long in, long long lat, long long lon) :
+Vertex::Vertex(long in, double lat, double lon) :
 		id(in), visited(false), lat(lat), lon(lon) {
 }
 
@@ -207,34 +208,34 @@ bool Graph::addEdge(Edge e) {
 	//tentar adicionar ou tentar encontrar, ver como fazer + eficiente
 }
 
-long long Graph::getMaxLat() const {
+double Graph::getMaxLat() const {
 	return maxLat;
 }
 
-void Graph::setMaxLat(long long maxLat) {
+void Graph::setMaxLat(double maxLat) {
 	this->maxLat = maxLat;
 }
 
-long long Graph::getMaxLon() const {
+double Graph::getMaxLon() const {
 	return maxLon;
 }
 
-void Graph::setMaxLon(long long maxLon) {
+void Graph::setMaxLon(double maxLon) {
 	this->maxLon = maxLon;
 }
 
-long long Graph::getMinLat() const {
+double Graph::getMinLat() const {
 	return minLat;
 }
 
-void Graph::setMinLat(long long minLat) {
+void Graph::setMinLat(double minLat) {
 	this->minLat = minLat;
 }
 
-long long Graph::getMinLon() const {
+double Graph::getMinLon() const {
 	return minLon;
 }
 
-void Graph::setMinLon(long long minLon) {
+void Graph::setMinLon(double minLon) {
 	this->minLon = minLon;
 }

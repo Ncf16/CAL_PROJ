@@ -45,11 +45,11 @@ class Vertex {
 	long long id;
 	vector<Edge> adj;
 	bool visited;
-	long long lat;
-	long long lon;
+	double lat;
+	double lon;
 public:
 	Vertex(long in);
-	Vertex(long in, long long lat, long long lon);
+	Vertex(long in, double lat, double lon);
 	friend class Graph;
 	friend bool operator==(Vertex lhs, Vertex rhs);
 	void removeVertex(const long & in);
@@ -60,16 +60,16 @@ public:
 	void setId(long id) {
 		this->id = id;
 	}
-	long long getLat() {
+	double getLat() {
 		return lat;
 	}
-	long long getLon() {
+	double getLon() {
 		return lon;
 	}
-	void setLat(long long lat) {
+	void setLat(double lat) {
 		this->lat = lat;
 	}
-	void setLon(long long lon) {
+	void setLon(double lon) {
 		this->lon = lon;
 	}
 	vector<Edge>& getAdj() {
@@ -89,10 +89,10 @@ public:
 
 class Graph {
 	vector<Vertex *> vertexSet;
-	long long minLat;
-	long long maxLat;
-	long long minLon;
-	long long maxLon;
+	double minLat;
+	double maxLat;
+	double minLon;
+	double maxLon;
 public:
 	vector<Vertex *> getVertexSet() const;
 	int getNumVertex() const;
@@ -100,7 +100,8 @@ public:
 	bool addVertex(Vertex * v);
 	bool addEdge(Edge e);
 	bool addEdge(const long & sourc, const long & dest, double w);
-	bool addEdge(const long & sourc, const long & dest, double w, const long idEdge);
+	bool addEdge(const long & sourc, const long & dest, double w,
+			const long idEdge);
 	Vertex * findVertex(const long &info);
 	bool removeVertex(const long &in);
 	bool removeEdge(const long &sourc, const long &dest);
@@ -110,20 +111,20 @@ public:
 	vector<long> bfs(Vertex * v) const;
 	void bfs(vector<long> &vec, Vertex * v) const;
 
-	long long getMaxLat() const;
+	double getMaxLat() const;
 
-	void setMaxLat(long long maxLat);
+	void setMaxLat(double maxLat);
 
-	long long getMaxLon() const;
+	double getMaxLon() const;
 
-	void setMaxLon(long long maxLon);
+	void setMaxLon(double maxLon);
 
-	long long getMinLat() const;
+	double getMinLat() const;
 
-	void setMinLat(long long minLat);
+	void setMinLat(double minLat);
 
-	long long getMinLon() const;
+	double getMinLon() const;
 
-	void setMinLon(long long minLon);
+	void setMinLon(double minLon);
 };
 #endif /* SRC_GRAFO_H_ */
