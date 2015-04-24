@@ -18,7 +18,7 @@ long long stringToLongLong(string s) {
 	stringstream(s) >> tempNum;
 
 	cout << "Numero em String: " << s << endl;
-	cout << "Numero transformado: " << tempNum << endl;
+	cout << "Numero transformado: " << tempNum << endl << endl;
 
 	return tempNum;
 }
@@ -80,7 +80,7 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
 
 		while (!nodeRead.eof()) {
 			getline(nodeRead, s, ';');
-			idNode = atol(s);
+			idNode = stringToLongLong(s);
 			cout << "1 read" << endl;
 			getline(nodeRead, s, ';');
 			lat = stringToDouble(s);
@@ -122,7 +122,7 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
 		int count = 0;
 		while (!roadRead.eof()) {
 			getline(roadRead, s, ';');
-			idEdge = atol(s);
+			idEdge = stringToLongLong(s);
 
 			getline(roadRead, s, ';');
 			roadName = s;
@@ -136,54 +136,62 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
 			tempRoadMap[idEdge] = roadName;
 			string roadName1 = tempRoadMap[idEdge];
 
-//			cout << count++ << endl;
-//			cout << "O idEdge e " << idEdge << endl;
-//			cout << "A estrada lida e " << roadName << endl;
-//			cout << "A estrada no map e " << roadName1 << endl << endl;
+			cout << count++ << endl;
+			cout << "O idEdge e " << idEdge << endl;
+			cout << "A estrada lida e " << roadName << endl;
+			cout << "A estrada no map e " << roadName1 << endl << endl;
 
 		}
 	} else {
 		cout << "Road file unexistent.\n";
 	}
 	roadRead.close();
+
 	//READING EDGE FILE
 	edgeRead.open(edgeFileName);
 	int count = 0;
 	if (!edgeRead.fail()) {
 		while (!edgeRead.eof()) {
+
+			cout << "Edge nr. "<< count++ << endl;
+			cout << "Reading idEdge, idSource, idDest"<< endl;
 			//add edges
 			getline(edgeRead, s, ';');
-			idEdge = atol(s);
-			cout << idEdge << endl;
+			idEdge = stringToLongLong(s);
 			getline(edgeRead, s, ';');
-			idSource = atol(s);
-			cout << idSource << endl;
+			idSource = stringToLongLong(s);
 			getline(edgeRead, s, ';');
-			idDest = atol(s);
-			cout << idDest << endl;
-			getline(edgeRead, s, '\n');
+			idDest = stringToLongLong(s);
+			//getline(edgeRead, s, '\n');
 
 			if (edgeRead.eof()) //This line is needed because the parser has a empty line at its end
 				break;
 
-			cout << count++ << endl;
-			cout << "Here\n";
-			string roadName = tempRoadMap[idEdge];
+			string roadName = tempRoadMap[idEdge]; //uses roadnames associated with the id
 			Vertex* org = vertexMap[idSource];
 			Vertex* dest = vertexMap[idDest];
 
 			int peso = distance(org->getLat(), org->getLon(), dest->getLat(),
 					dest->getLon());
+			cout << setprecision(10);
+			cout << "org->getLat() : " << org->getLat() << endl;
+			cout << "org->getLon() : " << org->getLon() << endl;
+			cout << "dest->getLat() : " << dest->getLat() << endl;
+			cout << "dest->getLon() : " << dest->getLon() << endl;
+			cout << "org->getId() : " << org->getId() << endl;
+			cout << "O peso disto e: " << peso << endl << endl;
 
 			Edge e(org, dest, roadName, peso, idEdge);
 			org->addEdge(e);
 			dest->addEdge(e); //We assume that there is no edge where org and dest are the same node
-
+			//cout << "O peso e: " << peso << endl;
+			//cout << "Edge id: " << idEdge << " where idOrig is " << org->getId() << " and idDest is " << dest->getId() << endl << endl;
+			//cout << "Edge id: " << idEdge << " where edge weight pulled from origin " << org->getAdj()[0].getWeight() << " and idDest is " << dest->getId() << endl << endl;
 		}
 	} else {
 		cout << "Edge file unexistent.\n";
 	}
-	cout << "Disjoint" << endl;
+	cout << "Creating Disjoint Set" << endl;
 	getline(cin, s);
 	edgeRead.close();
 	getline(cin, s);

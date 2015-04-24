@@ -48,8 +48,8 @@ class Vertex {
 	double lat;
 	double lon;
 public:
-	Vertex(long in);
-	Vertex(long in, double lat, double lon);
+	Vertex(long long in);
+	Vertex(long long in, double lat, double lon);
 	friend class Graph;
 	friend bool operator==(Vertex lhs, Vertex rhs);
 	void removeVertex(const long & in);

@@ -22,11 +22,11 @@ bool operator==(Vertex lhs, Vertex rhs) {
 		return false;
 }
 
-Vertex::Vertex(long in) :
+Vertex::Vertex(long long in) :
 		id(in), visited(false), lat(0), lon(0) {
 }
 
-Vertex::Vertex(long in, double lat, double lon) :
+Vertex::Vertex(long long in, double lat, double lon) :
 		id(in), visited(false), lat(lat), lon(lon) {
 }
 
