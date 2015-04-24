@@ -56,8 +56,8 @@ long long disjointSet::getFirstId() const {
 	return firstId;
 }
 
-void disjointSet::setFirstId(long long firstId) {
-	this->firstId = firstId;
+void disjointSet::setFirstId(long long id) {
+	this->firstId = id;
 }
 
 map<int, Vertex*> disjointSet::getToBeProcessed() const {

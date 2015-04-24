@@ -35,4 +35,4 @@ public:
 	map<int, Vertex*> getToBeProcessed() const;
 	void setToBeProcessed(const map<int, Vertex*> toBeProcessed);
 };
-#endif /* SRC_DISJOINT_SET_CPP_ */
+#endif
