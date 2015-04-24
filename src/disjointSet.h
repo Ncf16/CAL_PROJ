@@ -14,22 +14,25 @@
 #include<map>
 #include "grafo.h"
 using namespace std;
-typedef struct {
-	bool operator()(const vector<Vertex *> &vec1, const vector<Vertex *> &vec2) {
-		return vec1.size() > vec2.size();
-	}
 
-} compareSize;
 class disjointSet {
 private:
-
-	priority_queue<vector<Vertex *>, vector<vector<Vertex *> >, compareSize> disjoinedSet;
+	//priority_queue<vector<Vertex *>, vector<vector<Vertex *> >, compareSize>
+	vector<vector<Vertex *> > disjoinedSet;
 	map<int, Vertex*> toBeProcessed;
+	long long firstId;
 public:
 	disjointSet();
+	disjointSet(map<int, Vertex*> toBeProcessed, long long id);
 	void createSet(Vertex *v);
 	void mergeSet(vector<Vertex *> &vec, vector<Vertex*> &vec2);
 	Vertex* findSet(long long id);
+	void createDisjoinedSet();
+	vector<vector<Vertex *> > getDisjoinedSet() const;
+	void setDisjoinedSet(const vector<vector<Vertex *> > disjoinedSet);
+	long long getFirstId() const;
+	void setFirstId(long long firstId);
+	map<int, Vertex*> getToBeProcessed() const;
+	void setToBeProcessed(const map<int, Vertex*> toBeProcessed);
 };
-
 #endif /* SRC_DISJOINT_SET_CPP_ */

@@ -126,9 +126,5 @@ double distance(double lat1, double lon1, double lat2, double lon2) {
 	dist = dist * 60 * 1.1515;
 	return dist * 1.609344;
 }
-int main() {
-	Graph p;
-	loadParse("files/small1.txt", "files/small2.txt", "files/small3.txt", p);
-	return 0;
-}
+
 
