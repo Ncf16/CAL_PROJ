@@ -31,6 +31,8 @@ using namespace std;
 /** Maximo de items a mostar no ecra, quando se usa o scroll */
 const unsigned int MAX_PER_SCREEN = 6;
 
+int menu();
+
 /**
  * Mete o cursor numa posicao do ecra, para se poder escrever nesse local diretamente
  *

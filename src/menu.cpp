@@ -6,10 +6,8 @@ int menu() {
 	int opcao = 0;
 	if (menu_options.empty()) {
 		system("cls");
-		cout << "  Nao existem mapas disponiveis" << endl << endl;
-		cout << "  Prima (Esc) para regressar  " << endl << endl;
-
-		cout << endl << endl << endl << "  Nao ha Apps para mostrar  " << endl;
+		cout << " Nao existem mapas disponiveis" << endl << endl;
+		cout << " Prima (Esc) para regressar  " << endl << endl;
 
 		int tecla;
 		tecla = getch();
@@ -22,8 +20,8 @@ int menu() {
 		//Sair do programa
 	} else {
 
-		cout << "  Escolha um mapa" << endl << endl;
-		cout << "  Prima (Enter) para selecionar ou (Esc) para sair  " << endl << endl;
+		cout << " Escolha um mapa" << endl << endl;
+		cout << " Prima (Enter) para selecionar ou (Esc) para sair  " << endl << endl;
 		printMenuScroll(menu_options, opcao, MAX_PER_SCREEN);
 
 		int tecla;
@@ -38,8 +36,8 @@ int menu() {
 					if (opcao < 0)
 						opcao = menu_options.size() - 1; // se subir mais que o inicio, passa para o fim
 					system("cls");
-					cout << " Escolher mapa " << endl << endl;
-					cout << "  Prima (Enter) para selecionar ou (Esc) para regressar  " << endl << endl;
+					cout << " Escolha um mapa " << endl << endl;
+					cout << " Prima (Enter) para selecionar ou (Esc) para sair  " << endl << endl;
 					printMenuScroll(menu_options, opcao, MAX_PER_SCREEN);
 				}
 				if (tecla == 80) //ABAIXO
@@ -48,8 +46,8 @@ int menu() {
 					if (opcao > (menu_options.size() - 1))
 						opcao = 0; // se passar o fim, volta ao inicio
 					system("cls");
-					cout << " Escolher mapa " << endl << endl;
-					cout << "  Prima (Enter) para selecionar ou (Esc) para regressar  " << endl << endl;
+					cout << " Escolha um mapa " << endl << endl;
+					cout << " Prima (Enter) para selecionar ou (Esc) para sair  " << endl << endl;
 					printMenuScroll(menu_options, opcao, MAX_PER_SCREEN);
 				}
 			}
@@ -89,8 +87,10 @@ void gotoxy(int xpos, int ypos)  // just take this function as it is.
 vector<string> getDirFiles() {
 	vector<string> files;
 	DIR *dir;
+	int i=0;
 	struct dirent *entry;
-	if ((dir = opendir("./files/"))) {
+
+	if ((dir = opendir("../files/"))) {
 		while ((entry = readdir(dir))) {
 			if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0)
 				files.push_back(entry->d_name);
