@@ -26,8 +26,7 @@ double rad2deg(double rad) {
 	return (rad * 180 / PI);
 }
 
-void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
-		Graph &grafo) {
+void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName, Graph &grafo) {
 	ifstream nodeRead, roadRead, edgeRead;
 
 	long long idSource;
@@ -43,7 +42,7 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
 
 	//READING NODE FILE
 	nodeRead.open(nodeFileName);
-	if (!nodeRead.fail) {
+	if (!nodeRead.fail()) {
 		getline(nodeRead, s, ';');
 		grafo.setMinLat(atol(s));
 		getline(nodeRead, s, ';');
@@ -63,8 +62,7 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
 			lon = atol(s);
 			getline(nodeRead, s, '\n');
 			//acrescentar directamente ou após input
-			vertexMap.insert(
-					pair<int, Vertex*>(idNode, new Vertex(idNode, lat, lon)));
+			vertexMap.insert(pair<int, Vertex*>(idNode, new Vertex(idNode, lat, lon)));
 		}
 	} else {
 		cout << "Node file unexistent.\n";
@@ -73,7 +71,7 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
 
 	//READING ROAD FILE
 	roadRead.open(roadFile);
-	if (!roadRead.fail) {
+	if (!roadRead.fail()) {
 		while (!roadRead.eof()) {
 			getline(roadRead, s, ';');
 			idEdge = atol(s);
@@ -91,7 +89,7 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
 
 	//READING EDGE FILE
 	edgeRead.open(edgeFileName);
-	if (!edgeRead.fail) {
+	if (!edgeRead.fail()) {
 		while (!edgeRead.eof()) {
 			//add edges
 			getline(edgeRead, s, ';');
@@ -106,8 +104,7 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
 			Vertex* org = vertexMap[idSource];
 			Vertex* dest = vertexMap[idDest];
 
-			int peso = distance(org->getLat(), org->getLon(), dest->getLat(),
-					dest->getLon());
+			int peso = distance(org->getLat(), org->getLon(), dest->getLat(), dest->getLon());
 
 			Edge e(org, dest, roadName, peso, idEdge);
 			org->addEdge(e);
@@ -123,8 +120,7 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
 double distance(double lat1, double lon1, double lat2, double lon2) {
 	double theta, dist;
 	theta = lon1 - lon2;
-	dist = sin(deg2rad(lat1)) * sin(deg2rad(lat2))
-			+ cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * cos(deg2rad(theta));
+	dist = sin(deg2rad(lat1)) * sin(deg2rad(lat2)) + cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * cos(deg2rad(theta));
 	dist = acos(dist);
 	dist = rad2deg(dist);
 	dist = dist * 60 * 1.1515;

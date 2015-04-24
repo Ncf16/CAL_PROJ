@@ -59,8 +59,7 @@ bool verificaPass(T* dev_or_cli);
  * @param selected_option Opcao actual do vetor em que se esta - esta opcao esta highlighted com cor branca
  * @param max_per_screen Maximo de opcoes mostradas de cada vez no ecra
  */
-void printMenuScroll(vector<string> options, int selected_option,
-		const unsigned int max_per_screen);
+void printMenuScroll(vector<string> options, int selected_option, const unsigned int max_per_screen);
 /**
  *  Altera a cor do background e foreground para os valores/cores especificadas
  * @param background Cor para o fundo do API - usa-se aqui uma das macros definidas

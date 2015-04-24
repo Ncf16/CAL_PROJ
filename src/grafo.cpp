@@ -7,7 +7,6 @@
 #include "grafo.h"
 #include<iostream>
 
-
 void Vertex::removeVertex(const long & in) {
 	for (size_t i = 0; i < adj.size(); i++) {
 		if (*(adj[i].getDest()) == in) {
@@ -30,7 +29,7 @@ Vertex::Vertex(long in, long long lat, long long lon) :
 		id(in), visited(false), lat(lat), lon(lon) {
 }
 
-bool Vertex::addEdge(Edge e){
+bool Vertex::addEdge(Edge e) {
 	adj.push_back(e);
 }
 
@@ -39,7 +38,7 @@ Edge::Edge(Vertex*d, double w) :
 }
 
 //ter id ou não
-Edge::Edge(Vertex *orig, Vertex*d, string name, double w, long long id){
+Edge::Edge(Vertex *orig, Vertex*d, string name, double w, long long id) {
 	this->name = name;
 	this->dest = d;
 	this->orig = orig;

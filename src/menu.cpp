@@ -23,8 +23,7 @@ int menu() {
 	} else {
 
 		cout << "  Escolha um mapa" << endl << endl;
-		cout << "  Prima (Enter) para selecionar ou (Esc) para sair  " << endl
-				<< endl;
+		cout << "  Prima (Enter) para selecionar ou (Esc) para sair  " << endl << endl;
 		printMenuScroll(menu_options, opcao, MAX_PER_SCREEN);
 
 		int tecla;
@@ -40,9 +39,7 @@ int menu() {
 						opcao = menu_options.size() - 1; // se subir mais que o inicio, passa para o fim
 					system("cls");
 					cout << " Escolher mapa " << endl << endl;
-					cout
-							<< "  Prima (Enter) para selecionar ou (Esc) para regressar  "
-							<< endl << endl;
+					cout << "  Prima (Enter) para selecionar ou (Esc) para regressar  " << endl << endl;
 					printMenuScroll(menu_options, opcao, MAX_PER_SCREEN);
 				}
 				if (tecla == 80) //ABAIXO
@@ -52,9 +49,7 @@ int menu() {
 						opcao = 0; // se passar o fim, volta ao inicio
 					system("cls");
 					cout << " Escolher mapa " << endl << endl;
-					cout
-							<< "  Prima (Enter) para selecionar ou (Esc) para regressar  "
-							<< endl << endl;
+					cout << "  Prima (Enter) para selecionar ou (Esc) para regressar  " << endl << endl;
 					printMenuScroll(menu_options, opcao, MAX_PER_SCREEN);
 				}
 			}
@@ -97,17 +92,14 @@ vector<string> getDirFiles() {
 	struct dirent *entry;
 	if ((dir = opendir("./files/"))) {
 		while ((entry = readdir(dir))) {
-			if (strcmp(entry->d_name, ".") != 0
-					&& strcmp(entry->d_name, "..") != 0)
+			if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0)
 				files.push_back(entry->d_name);
 		}
 	}
 	return files;
 }
 
-
-void printMenuScroll(vector<string> options, int selected_option,
-		const unsigned int max_per_screen) {
+void printMenuScroll(vector<string> options, int selected_option, const unsigned int max_per_screen) {
 	int min = selected_option - (max_per_screen / 2);
 	unsigned int max = selected_option + ((max_per_screen + 1) / 2);
 

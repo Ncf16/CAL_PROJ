@@ -9,6 +9,7 @@
 
 #include <vector>
 #include <queue>
+#include<string>
 using namespace std;
 
 class Graph;
@@ -99,8 +100,7 @@ public:
 	bool addVertex(Vertex * v);
 	bool addEdge(Edge e);
 	bool addEdge(const long & sourc, const long & dest, double w);
-	bool addEdge(const long & sourc, const long & dest, double w,
-			const long idEdge);
+	bool addEdge(const long & sourc, const long & dest, double w, const long idEdge);
 	Vertex * findVertex(const long &info);
 	bool removeVertex(const long &in);
 	bool removeEdge(const long &sourc, const long &dest);
