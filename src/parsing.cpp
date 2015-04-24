@@ -8,6 +8,7 @@
 #include "grafo.h"
 #include "compare.h"
 #include <math.h>
+#include "disjointSet.h"
 #include <list>
 #include <map>
 
@@ -37,9 +38,8 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName, Graph 
 	long long idNode;
 	string roadName;
 	string s;
-	map<int, Vertex*> vertexMap;
-	map<int, string> tempRoadMap;
-
+	map<long long, Vertex*> vertexMap;
+	map<long long, string> tempRoadMap;
 	//READING NODE FILE
 	nodeRead.open(nodeFileName);
 	if (!nodeRead.fail()) {
@@ -68,7 +68,6 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName, Graph 
 		cout << "Node file unexistent.\n";
 	}
 	nodeRead.close();
-
 	//READING ROAD FILE
 	roadRead.open(roadFile);
 	if (!roadRead.fail()) {
@@ -80,13 +79,13 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName, Graph 
 			getline(roadRead, s, ';');
 			//Does nothing. We do not need the true/false line
 			getline(roadRead, s, '\n');
-			tempRoadMap.insert(pair<int, string>(idNode, roadName));
+			tempRoadMap.insert(pair<long long, string>(idEdge, roadName));
 		}
 	} else {
 		cout << "Road file unexistent.\n";
 	}
 	roadRead.close();
-
+	cout << vertexMap.size() << endl;
 	//READING EDGE FILE
 	edgeRead.open(edgeFileName);
 	if (!edgeRead.fail()) {
@@ -94,13 +93,17 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName, Graph 
 			//add edges
 			getline(edgeRead, s, ';');
 			idEdge = atol(s);
+			cout << idEdge << endl;
 			getline(edgeRead, s, ';');
 			idSource = atol(s);
+			cout << idSource << endl;
 			getline(edgeRead, s, ';');
 			idDest = atol(s);
+			cout << idDest << endl;
 			getline(edgeRead, s, '\n');
-
-			string roadName = tempRoadMap.at(idEdge);
+			cout << "S" << endl;
+			cout << "Here\n";
+			string roadName = tempRoadMap[idEdge];
 			Vertex* org = vertexMap[idSource];
 			Vertex* dest = vertexMap[idDest];
 
@@ -114,7 +117,13 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName, Graph 
 	} else {
 		cout << "Edge file unexistent.\n";
 	}
+	cout << "Disjoint" << endl;
+	getline(cin, s);
 	edgeRead.close();
+	getline(cin, s);
+	disjointSet d(vertexMap, idNode);
+	d.createDisjoinedSet();
+	cout << d.getDisjoinedSet().size() << endl;
 }
 //ver link
 double distance(double lat1, double lon1, double lat2, double lon2) {
@@ -127,4 +136,8 @@ double distance(double lat1, double lon1, double lat2, double lon2) {
 	return dist * 1.609344;
 }
 
-
+int main() {
+	Graph grafo;
+	loadParse("files/tondelinha/tond1.txt", "files/tondelinha/tond2.txt", "files/tondelinha/tond3.txt", grafo);
+	return 0;
+}

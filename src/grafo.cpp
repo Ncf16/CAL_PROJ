@@ -33,8 +33,8 @@ bool Vertex::addEdge(Edge e) {
 	adj.push_back(e);
 }
 
-Edge::Edge(Vertex*d, double w) :
-		dest(d), weight(w) {
+Edge::Edge(Vertex*d, double w) : //TODO check if id should be 0
+		dest(d), weight(w),id(0) {
 }
 
 //ter id ou não

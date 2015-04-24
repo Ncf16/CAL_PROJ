@@ -8,6 +8,7 @@
 #include "disjointSet.h"
 #include<fstream>
 disjointSet::disjointSet() {
+	firstId = 0;
 }
 void disjointSet::createSet(Vertex *v) {
 	vector<Vertex*> vec;
@@ -15,7 +16,7 @@ void disjointSet::createSet(Vertex *v) {
 	disjoinedSet.push_back(vec);
 }
 
-disjointSet::disjointSet(map<int, Vertex*> toBeProcessed, long long id) {
+disjointSet::disjointSet(map<long long, Vertex*> toBeProcessed, long long id) {
 	this->toBeProcessed = toBeProcessed;
 	this->firstId = id;
 
@@ -60,11 +61,11 @@ void disjointSet::setFirstId(long long id) {
 	this->firstId = id;
 }
 
-map<int, Vertex*> disjointSet::getToBeProcessed() const {
+map<long long, Vertex*> disjointSet::getToBeProcessed() const {
 	return toBeProcessed;
 }
 
-void disjointSet::setToBeProcessed(const map<int, Vertex*> toBeProcessed) {
+void disjointSet::setToBeProcessed(const map<long long, Vertex*> toBeProcessed) {
 	this->toBeProcessed = toBeProcessed;
 }
 
@@ -77,47 +78,35 @@ long long atol2(string s) {
 	return n;
 }
 void disjointSet::createDisjoinedSet() {
-}
-int main() {
 
-	cout << "IN" << endl;
-	ifstream nodeRead;
-	char * nodeFileName = "files/tondelinha/tond1.txt";
-
-	long long lat;
-	long long lon;
-	long long idNode;
-	string roadName;
-	string s;
-	map<int, Vertex*> vertexMap;
-	map<int, string> tempRoadMap;
-
-	//READING NODE FILE
-	nodeRead.open(nodeFileName);
-	if (!nodeRead.fail()) {
-		getline(nodeRead, s, ';');
-		getline(nodeRead, s, ';');
-		getline(nodeRead, s, ';');
-		getline(nodeRead, s, ';');
-		getline(nodeRead, s, '\n');
-
-		while (!nodeRead.eof()) {
-			getline(nodeRead, s, ';');
-			idNode = atol2(s);
-			getline(nodeRead, s, ';');
-			lat = atol2(s);
-			getline(nodeRead, s, ';');
-			lon = atol2(s);
-			getline(nodeRead, s, '\n');
-			//acrescentar directamente ou após input
-			vertexMap.insert(pair<int, Vertex*>(idNode, new Vertex(idNode, lat, lon)));
-		}
-	} else {
-		cout << "Node file unexistent.\n";
+	map<long long, Vertex*>::iterator it = toBeProcessed.begin();
+	map<long long, Vertex*>::iterator ite = toBeProcessed.end();
+	cout << "DisjoinedSet" << endl;
+	for (; it != ite; it++) {
+		it->second->setVisited(false);
 	}
-	nodeRead.close();
+	it = toBeProcessed.begin();
+	for (; it != ite; it++) {
+		vector<Vertex *> res;
+		if (!it->second->isVisited()) {
+			createDisjoinedSet(it->second, res);
+			disjoinedSet.push_back(res);
+		}
+	}
 
-	disjointSet d(vertexMap, idNode);
-	cout << d.getToBeProcessed().size() << endl;
-	return 0;
 }
+
+void disjointSet::createDisjoinedSet(Vertex *v, vector<Vertex *> &vec) {
+	v->setVisited(true);
+	vec.push_back(v);
+	vector<Edge>::iterator it = v->getAdj().begin();
+	vector<Edge>::iterator ite = v->getAdj().end();
+	for (; it != ite; it++) {
+		if (!it->getDest()->isVisited()) {
+			createDisjoinedSet(it->getDest(), vec);
+		}
+
+	}
+
+}
+

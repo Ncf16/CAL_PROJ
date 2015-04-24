@@ -87,7 +87,7 @@ void gotoxy(int xpos, int ypos)  // just take this function as it is.
 vector<string> getDirFiles() {
 	vector<string> files;
 	DIR *dir;
-	int i=0;
+	int i = 0;
 	struct dirent *entry;
 
 	if ((dir = opendir("../files/"))) {
@@ -138,7 +138,7 @@ void printMenuScroll(vector<string> options, int selected_option, const unsigned
 // First 4 bits are background, last 4 bits are foreground
 void cor(int background, int foreground) {
 	HANDLE hConsole;
-	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+//	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, foreground + 16 * background);
 }
 
