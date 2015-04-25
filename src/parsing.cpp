@@ -211,7 +211,8 @@ double distance(double lat1, double lon1, double lat2, double lon2) {
 }
 
 int main() {
-	Graph grafo;
-	loadParse("files/tondelinha/tond1.txt", "files/tondelinha/tond2.txt", "files/tondelinha/tond3.txt", grafo);
+//	Graph grafo;
+//	loadParse("files/tondelinha/tond1.txt", "files/tondelinha/tond2.txt", "files/tondelinha/tond3.txt", grafo);
+	menu();
 	return 0;
 }
