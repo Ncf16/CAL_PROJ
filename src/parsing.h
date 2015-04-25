@@ -22,5 +22,5 @@ long long atol(string s);
 double deg2rad(double deg);
 double rad2deg(double rad);
 double distance(double lat1, double lon1, double lat2, double lon2);
-void loadParse(char * edgeFileName, char * nodeFileName, char * roadFile, Graph &grafo);
+void loadParse(string edgeFileName, string nodeFileName, string roadFile, Graph &grafo);
 #endif /* SRC_PARSING_H_ */
