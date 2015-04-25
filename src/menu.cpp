@@ -3,7 +3,7 @@
 using namespace std;
 int menu() {
 	Graph grafo;
-	//char* nodes = "Nodes", roads="Roads",edges="Edges";
+	//string nodes = "Nodes", roads="Roads",edges="Edges";
 	vector<string> menu_options = getDirFiles();
 	int opcao = 0;
 
@@ -64,9 +64,9 @@ int menu() {
 
 			system("cls");
 			cout << "  A processar..." << endl << endl << endl << endl;
-			//char* nodes=menu_options[opcao]+"Nodes";
-
-			//loadParse(menu_options[opcao]+nodes, menu_options[opcao]+roads, menu_options[opcao]+edges,grafo);
+			loadParse(menu_options[opcao] + "Nodes",
+					menu_options[opcao] + "Roads",
+					menu_options[opcao] + "Edges", grafo);
 
 //			try {  DESCOMENTAR SE QUISERMOS GRAVAR FICHEIROS
 //				//gravar stuff
@@ -109,21 +109,6 @@ vector<string> getDirFiles() {
 	return files;
 }
 
-vector<string> getFiles(string path) {
-	vector<string> files;
-	DIR *dir;
-	int i = 0;
-	struct dirent *entry;
-	if ((dir = opendir("../files/"+path.c_str()))) {
-		while ((entry = readdir(dir))) {
-			if (strcmp(entry->d_name, ".") != 0
-					&& strcmp(entry->d_name, "..") != 0)
-				files.push_back(entry->d_name);
-		}
-	}
-	return files;
-}
-
 void printMenuScroll(vector<string> options, int selected_option,
 		const unsigned int max_per_screen) {
 	int min = selected_option - (max_per_screen / 2);
@@ -147,9 +132,9 @@ void printMenuScroll(vector<string> options, int selected_option,
 
 	for (unsigned int i = min; i < max; i++) {
 		if (i == selected_option) {
+			cout << " ";
 			cor(WHITE, BLACK);
-			temp = "  " + options[i];
-			cout << temp;
+			cout << options[i];
 			cout << endl << endl;
 			cor(BLACK, WHITE);  // reset a cor
 		} else {
@@ -164,7 +149,7 @@ void printMenuScroll(vector<string> options, int selected_option,
 // First 4 bits are background, last 4 bits are foreground
 void cor(int background, int foreground) {
 	HANDLE hConsole;
-//	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, foreground + 16 * background);
 }
 
