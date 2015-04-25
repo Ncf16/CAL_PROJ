@@ -50,13 +50,15 @@ class Vertex {
 	bool visited;
 	double lat;
 	double lon;
+	double x;
+	double y;
 public:
 	Vertex(long long in);
-	Vertex(long long in, double lat, double lon);
+	Vertex(long long in, double lat, double lon, double x, double y);
 	friend class Graph;
 	friend bool operator==(Vertex lhs, Vertex rhs);
 	void removeVertex(const long & in);
-	bool addEdge(Edge e);
+	void addEdge(Edge e);
 	long long getId() const {
 		return id;
 	}
@@ -88,6 +90,22 @@ public:
 	void setVisited(bool visited) {
 		this->visited = visited;
 	}
+
+	double getX() const {
+		return x;
+	}
+
+	void setX(double x) {
+		this->x = x;
+	}
+
+	double getY() const {
+		return y;
+	}
+
+	void setY(double y) {
+		this->y = y;
+	}
 };
 
 class Graph {
@@ -101,7 +119,7 @@ public:
 	int getNumVertex() const;
 	bool addVertex(const long & in);
 	bool addVertex(Vertex * v);
-	bool addEdge(Edge e);
+	void addEdge(Edge e);
 	bool addEdge(const long & sourc, const long & dest, double w);
 	bool addEdge(const long & sourc, const long & dest, double w, const long idEdge);
 	Vertex * findVertex(const long &info);

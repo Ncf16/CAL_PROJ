@@ -1,7 +1,7 @@
 #include "menu.h"
 
 using namespace std;
-int menu() {
+void menu() {
 	Graph grafo;
 	//string nodes = "Nodes", roads="Roads",edges="Edges";
 	vector<string> menu_options = getDirFiles();
@@ -96,7 +96,6 @@ void gotoxy(int xpos, int ypos)  // just take this function as it is.
 vector<string> getDirFiles() {
 	vector<string> files;
 	DIR *dir;
-	int i = 0;
 	struct dirent *entry;
 
 	if ((dir = opendir("../files/"))) {
@@ -171,6 +170,7 @@ int teclas() {
 		}
 		return 13;
 	}
+	return -1;
 }
 
 //FUNCAO RESPONSAVEL POR RESTRINGIR A VARIAVEL "opcao"

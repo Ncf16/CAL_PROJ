@@ -56,7 +56,6 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 	nodeRead.open(nodeFileName.c_str());
 	if (!nodeRead.fail()) {
 		int count = 0;
-		int tempNum;
 		double x, y;
 		stringstream tempStream;
 
@@ -180,8 +179,11 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 			cout << "O peso disto e: " << peso << endl << endl;
 
 			Edge e(org, dest, roadName, peso, idEdge);
+			 Edge f(dest, org, roadName, peso, idEdge);
 			org->addEdge(e);
-			dest->addEdge(e); //We assume that there is no edge where org and dest are the same node
+			dest->addEdge(f);
+			//We assume that there is no edge where org and dest are the same node
+
 			//cout << "O peso e: " << peso << endl;
 			//cout << "Edge id: " << idEdge << " where idOrig is " << org->getId() << " and idDest is " << dest->getId() << endl << endl;
 			//cout << "Edge id: " << idEdge << " where edge weight pulled from origin " << org->getAdj()[0].getWeight() << " and idDest is " << dest->getId() << endl << endl;

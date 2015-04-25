@@ -23,14 +23,14 @@ bool operator==(Vertex lhs, Vertex rhs) {
 }
 
 Vertex::Vertex(long long in) :
-		id(in), visited(false), lat(0), lon(0) {
+		id(in), visited(false), lat(0), lon(0), x(0), y(0) {
 }
 
-Vertex::Vertex(long long in, double lat, double lon) :
-		id(in), visited(false), lat(lat), lon(lon) {
+Vertex::Vertex(long long in, double lat, double lon, double x, double y) :
+		id(in), visited(false), lat(lat), lon(lon), x(x), y(y) {
 }
 
-bool Vertex::addEdge(Edge e) {
+void Vertex::addEdge(Edge e) {
 	adj.push_back(e);
 }
 
@@ -201,7 +201,7 @@ bool Graph::addVertex(Vertex *v) {
 	return true;
 
 }
-bool Graph::addEdge(Edge e) {
+void Graph::addEdge(Edge e) {
 
 	e.orig->adj.push_back(e);
 
