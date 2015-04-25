@@ -13,11 +13,11 @@
 #include <fstream>
 #include <stdlib.h>
 #include "grafo.h"
+#include "menu.h"
 #include <math.h>
 #include <set>
 
 #define PI acos(-1)
-void menu();
 long long atol(string s);
 double deg2rad(double deg);
 double rad2deg(double rad);
