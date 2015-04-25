@@ -17,8 +17,8 @@ long long stringToLongLong(string s) {
 	long long tempNum;
 	stringstream(s) >> tempNum;
 
-	cout << "Numero em String: " << s << endl;
-	cout << "Numero transformado: " << tempNum << endl << endl;
+//	cout << "Numero em String: " << s << endl;
+//	cout << "Numero transformado: " << tempNum << endl << endl;
 
 	return tempNum;
 }
@@ -41,7 +41,7 @@ double rad2deg(double rad) {
 	return (rad * 180 / PI);
 }
 
-void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName, Graph &grafo) {
+void loadParse(string nodeFileName,string roadFile,string edgeFileName, Graph &grafo) {
 	ifstream nodeRead, roadRead, edgeRead;
 
 	long long idSource;
@@ -56,7 +56,7 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName, Graph 
 	map<long long, string> tempRoadMap;
 
 	//READING NODE FILE
-	nodeRead.open(nodeFileName);
+	nodeRead.open((char*)nodeFileName);
 	if (!nodeRead.fail()) {
 		int count = 0;
 		int tempNum;
@@ -97,17 +97,17 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName, Graph 
 			Vertex* vertexNew = new Vertex(idNode, lat, lon);
 			vertexMap.insert(pair<long long, Vertex*>(idNode, vertexNew));
 
-//			cout << setprecision(10);
-//			cout << count++ << endl;
-//			cout << "O idNode e " << idNode << endl;
-//			cout << "A latitude e " << lat << endl;
-//			cout << "A longitude e " << lon << endl;
-//			cout << "O idNode do inserido e " << vertexMap[idNode]->getId()
-//					<< endl;
-//			cout << "A latitude do inserido e " << vertexMap[idNode]->getLat()
-//					<< endl;
-//			cout << "A longitude do inserido e " << vertexMap[idNode]->getLon()
-//					<< endl << endl;
+			cout << setprecision(10);
+			cout << count++ << endl;
+			cout << "O idNode e " << idNode << endl;
+			cout << "A latitude e " << lat << endl;
+			cout << "A longitude e " << lon << endl;
+			cout << "O idNode do inserido e " << vertexMap[idNode]->getId()
+					<< endl;
+			cout << "A latitude do inserido e " << vertexMap[idNode]->getLat()
+					<< endl;
+			cout << "A longitude do inserido e " << vertexMap[idNode]->getLon()
+					<< endl << endl;
 
 		}
 		cout << "Existem " << vertexMap.size() << " vertices." << endl << endl;
@@ -116,7 +116,7 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName, Graph 
 	}
 	nodeRead.close();
 	//READING ROAD FILE
-	roadRead.open(roadFile);
+	roadRead.open((char*)roadFile);
 	if (!roadRead.fail()) {
 		int count = 0;
 		while (!roadRead.eof()) {
@@ -147,7 +147,7 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName, Graph 
 	roadRead.close();
 
 	//READING EDGE FILE
-	edgeRead.open(edgeFileName);
+	edgeRead.open((char*)edgeFileName);
 	int count = 0;
 	if (!edgeRead.fail()) {
 		while (!edgeRead.eof()) {
@@ -170,7 +170,7 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName, Graph 
 			Vertex* org = vertexMap[idSource];
 			Vertex* dest = vertexMap[idDest];
 
-			int peso = distance(org->getLat(), org->getLon(), dest->getLat(), dest->getLon());
+			double peso = distance(org->getLat(), org->getLon(), dest->getLat(), dest->getLon());
 			cout << setprecision(10);
 			cout << "org->getLat() : " << org->getLat() << endl;
 			cout << "org->getLon() : " << org->getLon() << endl;
