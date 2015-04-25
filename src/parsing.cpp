@@ -41,8 +41,7 @@ double rad2deg(double rad) {
 	return (rad * 180 / PI);
 }
 
-void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
-		Graph &grafo) {
+void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName, Graph &grafo) {
 	ifstream nodeRead, roadRead, edgeRead;
 
 	long long idSource;
@@ -153,8 +152,8 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
 	if (!edgeRead.fail()) {
 		while (!edgeRead.eof()) {
 
-			cout << "Edge nr. "<< count++ << endl;
-			cout << "Reading idEdge, idSource, idDest"<< endl;
+			cout << "Edge nr. " << count++ << endl;
+			cout << "Reading idEdge, idSource, idDest" << endl;
 			//add edges
 			getline(edgeRead, s, ';');
 			idEdge = stringToLongLong(s);
@@ -171,8 +170,7 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
 			Vertex* org = vertexMap[idSource];
 			Vertex* dest = vertexMap[idDest];
 
-			int peso = distance(org->getLat(), org->getLon(), dest->getLat(),
-					dest->getLon());
+			int peso = distance(org->getLat(), org->getLon(), dest->getLat(), dest->getLon());
 			cout << setprecision(10);
 			cout << "org->getLat() : " << org->getLat() << endl;
 			cout << "org->getLon() : " << org->getLon() << endl;
@@ -192,19 +190,20 @@ void loadParse(char * nodeFileName, char * roadFile, char * edgeFileName,
 		cout << "Edge file unexistent.\n";
 	}
 	cout << "Creating Disjoint Set" << endl;
-	getline(cin, s);
+
 	edgeRead.close();
 	getline(cin, s);
-	disjointSet d(vertexMap, idNode);
+	disjointSet d(vertexMap);
+	cout << vertexMap.size() << endl;
 	d.createDisjoinedSet();
 	cout << d.getDisjoinedSet().size() << endl;
+	d.getCount();
 }
 //ver link
 double distance(double lat1, double lon1, double lat2, double lon2) {
 	double theta, dist;
 	theta = lon1 - lon2;
-	dist = sin(deg2rad(lat1)) * sin(deg2rad(lat2))
-			+ cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * cos(deg2rad(theta));
+	dist = sin(deg2rad(lat1)) * sin(deg2rad(lat2)) + cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * cos(deg2rad(theta));
 	dist = acos(dist);
 	dist = rad2deg(dist);
 	dist = dist * 60 * 1.1515;
@@ -213,7 +212,6 @@ double distance(double lat1, double lon1, double lat2, double lon2) {
 
 int main() {
 	Graph grafo;
-	loadParse("files/tondelinha/tond1.txt", "files/tondelinha/tond2.txt",
-			"files/tondelinha/tond3.txt", grafo);
+	loadParse("files/tondelinha/tond1.txt", "files/tondelinha/tond2.txt", "files/tondelinha/tond3.txt", grafo);
 	return 0;
 }

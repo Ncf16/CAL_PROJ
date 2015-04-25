@@ -8,7 +8,6 @@
 #include "disjointSet.h"
 #include<fstream>
 disjointSet::disjointSet() {
-	firstId = 0;
 }
 void disjointSet::createSet(Vertex *v) {
 	vector<Vertex*> vec;
@@ -16,9 +15,8 @@ void disjointSet::createSet(Vertex *v) {
 	disjoinedSet.push_back(vec);
 }
 
-disjointSet::disjointSet(map<long long, Vertex*> toBeProcessed, long long id) {
+disjointSet::disjointSet(map<long long, Vertex*> toBeProcessed ) {
 	this->toBeProcessed = toBeProcessed;
-	this->firstId = id;
 
 }
 
@@ -53,14 +51,6 @@ void disjointSet::setDisjoinedSet(const vector<vector<Vertex *> > disjoinedSet) 
 	this->disjoinedSet = disjoinedSet;
 }
 
-long long disjointSet::getFirstId() const {
-	return firstId;
-}
-
-void disjointSet::setFirstId(long long id) {
-	this->firstId = id;
-}
-
 map<long long, Vertex*> disjointSet::getToBeProcessed() const {
 	return toBeProcessed;
 }
@@ -91,6 +81,7 @@ void disjointSet::createDisjoinedSet() {
 		if (!it->second->isVisited()) {
 			createDisjoinedSet(it->second, res);
 			disjoinedSet.push_back(res);
+			cout << res.size() << endl;
 		}
 	}
 
