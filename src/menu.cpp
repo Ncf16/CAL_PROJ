@@ -2,8 +2,11 @@
 
 using namespace std;
 int menu() {
+	Graph grafo;
+	//char* nodes = "Nodes", roads="Roads",edges="Edges";
 	vector<string> menu_options = getDirFiles();
 	int opcao = 0;
+
 	if (menu_options.empty()) {
 		system("cls");
 		cout << " Nao existem mapas disponiveis" << endl << endl;
@@ -61,7 +64,9 @@ int menu() {
 
 			system("cls");
 			cout << "  A processar..." << endl << endl << endl << endl;
-			//cout << menu_options[opcao] << endl;
+			//char* nodes=menu_options[opcao]+"Nodes";
+
+			//loadParse(menu_options[opcao]+nodes, menu_options[opcao]+roads, menu_options[opcao]+edges,grafo);
 
 //			try {  DESCOMENTAR SE QUISERMOS GRAVAR FICHEIROS
 //				//gravar stuff
@@ -104,8 +109,19 @@ vector<string> getDirFiles() {
 	return files;
 }
 
-vector<string> getFiles(string dir) {
-
+vector<string> getFiles(string path) {
+	vector<string> files;
+	DIR *dir;
+	int i = 0;
+	struct dirent *entry;
+	if ((dir = opendir("../files/"+path.c_str()))) {
+		while ((entry = readdir(dir))) {
+			if (strcmp(entry->d_name, ".") != 0
+					&& strcmp(entry->d_name, "..") != 0)
+				files.push_back(entry->d_name);
+		}
+	}
+	return files;
 }
 
 void printMenuScroll(vector<string> options, int selected_option,

@@ -12,6 +12,7 @@
 #include <string.h>
 #include <fstream>
 #include <algorithm>
+#include "parsing.h"
 
 using namespace std;
 
