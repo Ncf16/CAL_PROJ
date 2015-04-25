@@ -82,9 +82,9 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 			getline(nodeRead, s, ';');
 			lon = stringToDouble(s);
 			getline(nodeRead, s, ';');
-			x = stringToDouble(s);
-			getline(nodeRead, s);
 			y = stringToDouble(s);
+			getline(nodeRead, s);
+			x = stringToDouble(s);
 			getline(nodeRead, s, '\n'); //Same as getline(nodeRead, s);
 
 			if (nodeRead.eof()) //This line is needed because the parser has a empty line at its end
