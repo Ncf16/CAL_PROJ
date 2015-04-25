@@ -41,7 +41,7 @@ double rad2deg(double rad) {
 	return (rad * 180 / PI);
 }
 
-void loadParse(string nodeFileName,string roadFile,string edgeFileName, Graph &grafo) {
+void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph &grafo) {
 	ifstream nodeRead, roadRead, edgeRead;
 
 	long long idSource;
@@ -56,7 +56,7 @@ void loadParse(string nodeFileName,string roadFile,string edgeFileName, Graph &g
 	map<long long, string> tempRoadMap;
 
 	//READING NODE FILE
-	nodeRead.open((char*)nodeFileName);
+	nodeRead.open(nodeFileName.c_str());
 	if (!nodeRead.fail()) {
 		int count = 0;
 		int tempNum;
@@ -102,12 +102,9 @@ void loadParse(string nodeFileName,string roadFile,string edgeFileName, Graph &g
 			cout << "O idNode e " << idNode << endl;
 			cout << "A latitude e " << lat << endl;
 			cout << "A longitude e " << lon << endl;
-			cout << "O idNode do inserido e " << vertexMap[idNode]->getId()
-					<< endl;
-			cout << "A latitude do inserido e " << vertexMap[idNode]->getLat()
-					<< endl;
-			cout << "A longitude do inserido e " << vertexMap[idNode]->getLon()
-					<< endl << endl;
+			cout << "O idNode do inserido e " << vertexMap[idNode]->getId() << endl;
+			cout << "A latitude do inserido e " << vertexMap[idNode]->getLat() << endl;
+			cout << "A longitude do inserido e " << vertexMap[idNode]->getLon() << endl << endl;
 
 		}
 		cout << "Existem " << vertexMap.size() << " vertices." << endl << endl;
@@ -116,7 +113,7 @@ void loadParse(string nodeFileName,string roadFile,string edgeFileName, Graph &g
 	}
 	nodeRead.close();
 	//READING ROAD FILE
-	roadRead.open((char*)roadFile);
+	roadRead.open(roadFile.c_str());
 	if (!roadRead.fail()) {
 		int count = 0;
 		while (!roadRead.eof()) {
@@ -147,7 +144,7 @@ void loadParse(string nodeFileName,string roadFile,string edgeFileName, Graph &g
 	roadRead.close();
 
 	//READING EDGE FILE
-	edgeRead.open((char*)edgeFileName);
+	edgeRead.open(edgeFileName.c_str());
 	int count = 0;
 	if (!edgeRead.fail()) {
 		while (!edgeRead.eof()) {
