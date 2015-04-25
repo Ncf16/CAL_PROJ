@@ -100,8 +100,7 @@ public:
 	bool addVertex(Vertex * v);
 	bool addEdge(Edge e);
 	bool addEdge(const long & sourc, const long & dest, double w);
-	bool addEdge(const long & sourc, const long & dest, double w,
-			const long idEdge);
+	bool addEdge(const long & sourc, const long & dest, double w, const long idEdge);
 	Vertex * findVertex(const long &info);
 	bool removeVertex(const long &in);
 	bool removeEdge(const long &sourc, const long &dest);
@@ -110,21 +109,14 @@ public:
 	void dfs(vector<long> &vec, Vertex * v) const;
 	vector<long> bfs(Vertex * v) const;
 	void bfs(vector<long> &vec, Vertex * v) const;
-
+	vector<Vertex *> prim();
 	double getMaxLat() const;
-
 	void setMaxLat(double maxLat);
-
 	double getMaxLon() const;
-
 	void setMaxLon(double maxLon);
-
 	double getMinLat() const;
-
 	void setMinLat(double minLat);
-
 	double getMinLon() const;
-
 	void setMinLon(double minLon);
 };
 #endif /* SRC_GRAFO_H_ */

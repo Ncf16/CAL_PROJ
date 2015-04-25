@@ -35,7 +35,7 @@ bool Vertex::addEdge(Edge e) {
 }
 
 Edge::Edge(Vertex*d, double w) : //TODO check if id should be 0
-		dest(d), weight(w),id(0) {
+		dest(d), weight(w), id(0) {
 }
 
 //ter id ou não
@@ -238,4 +238,7 @@ double Graph::getMinLon() const {
 
 void Graph::setMinLon(double minLon) {
 	this->minLon = minLon;
+}
+
+vector<Vertex *> Graph::prim() {
 }
