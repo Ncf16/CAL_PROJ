@@ -44,14 +44,11 @@ double rad2deg(double rad) {
 void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph &grafo) {
 	ifstream nodeRead, roadRead, edgeRead;
 
-	long long idSource;
-	long long idEdge;
-	long long idDest;
-	long long idNode;
-	double lat;
-	double lon;
-	string roadName;
-	string s;
+	long long idSource, idEdge, idDest, idNode;
+	double lat, lon;
+
+	string roadName, s;
+
 	map<long long, Vertex*> vertexMap;
 	map<long long, string> tempRoadMap;
 
@@ -60,10 +57,11 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 	if (!nodeRead.fail()) {
 		int count = 0;
 		int tempNum;
+		double x, y;
 		stringstream tempStream;
 
 		getline(nodeRead, s, ';');
-
+		//READING 4 FIRST NUMBERS, MIN/MAX LAT/LON
 		grafo.setMinLat(stringToDouble(s));
 		getline(nodeRead, s, ';');
 		grafo.setMaxLat(stringToDouble(s));
@@ -80,31 +78,36 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 		while (!nodeRead.eof()) {
 			getline(nodeRead, s, ';');
 			idNode = stringToLongLong(s);
-			cout << "1 read" << endl;
 			getline(nodeRead, s, ';');
 			lat = stringToDouble(s);
-			cout << "2 read" << endl;
 			getline(nodeRead, s, ';');
 			lon = stringToDouble(s);
-			cout << "3 read" << endl;
-			getline(nodeRead, s, '\n');
-			cout << "4 read" << endl << endl;
-			//acrescentar directamente ou após input
+			getline(nodeRead, s, ';');
+			x = stringToDouble(s);
+			getline(nodeRead, s);
+			y = stringToDouble(s);
+			getline(nodeRead, s, '\n'); //Same as getline(nodeRead, s);
 
 			if (nodeRead.eof()) //This line is needed because the parser has a empty line at its end
 				break;
 
-			Vertex* vertexNew = new Vertex(idNode, lat, lon);
+			Vertex* vertexNew = new Vertex(idNode, lat, lon, x, y);
 			vertexMap.insert(pair<long long, Vertex*>(idNode, vertexNew));
 
 			cout << setprecision(10);
 			cout << count++ << endl;
-			cout << "O idNode e " << idNode << endl;
-			cout << "A latitude e " << lat << endl;
-			cout << "A longitude e " << lon << endl;
-			cout << "O idNode do inserido e " << vertexMap[idNode]->getId() << endl;
-			cout << "A latitude do inserido e " << vertexMap[idNode]->getLat() << endl;
-			cout << "A longitude do inserido e " << vertexMap[idNode]->getLon() << endl << endl;
+//			cout << "O idNode e " << idNode << endl;
+//			cout << "A latitude e " << lat << endl;
+//			cout << "A longitude e " << lon << endl;
+			cout << "O idNode do inserido e " << vertexMap[idNode]->getId()
+					<< endl;
+			cout << "A latitude do inserido e " << vertexMap[idNode]->getLat()
+					<< endl;
+			cout << "A longitude do inserido e " << vertexMap[idNode]->getLon()
+					<< endl;
+			cout << "O x do inserido e " << vertexMap[idNode]->getX() << endl;
+			cout << "O y do inserido e " << vertexMap[idNode]->getY() << endl
+					<< endl;
 
 		}
 		cout << "Existem " << vertexMap.size() << " vertices." << endl << endl;
