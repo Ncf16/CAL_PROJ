@@ -240,5 +240,13 @@ void Graph::setMinLon(double minLon) {
 	this->minLon = minLon;
 }
 
+Vertex* Edge::getOrig() const {
+	return orig;
+}
+
+void Edge::setOrig(Vertex* orig) {
+	this->orig = orig;
+}
+
 vector<Vertex *> Graph::prim() {
 }

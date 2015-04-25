@@ -37,6 +37,9 @@ public:
 	void setWeight(double weight) {
 		this->weight = weight;
 	}
+	Vertex* getOrig() const;
+	void setOrig(Vertex* orig);
+
 	friend class Graph;
 	friend class Vertex;
 };

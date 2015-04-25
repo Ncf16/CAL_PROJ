@@ -15,7 +15,7 @@ void disjointSet::createSet(Vertex *v) {
 	disjoinedSet.push_back(vec);
 }
 
-disjointSet::disjointSet(map<long long, Vertex*> toBeProcessed ) {
+disjointSet::disjointSet(map<long long, Vertex*> toBeProcessed) {
 	this->toBeProcessed = toBeProcessed;
 
 }
@@ -81,7 +81,7 @@ void disjointSet::createDisjoinedSet() {
 		if (!it->second->isVisited()) {
 			createDisjoinedSet(it->second, res);
 			disjoinedSet.push_back(res);
-			cout << res.size() << endl;
+
 		}
 	}
 
@@ -95,6 +95,10 @@ void disjointSet::createDisjoinedSet(Vertex *v, vector<Vertex *> &vec) {
 	for (; it != ite; it++) {
 		if (!it->getDest()->isVisited()) {
 			createDisjoinedSet(it->getDest(), vec);
+		}
+		if (!it->getOrig()->isVisited()) {
+			createDisjoinedSet(it->getOrig(), vec);
+
 		}
 
 	}
