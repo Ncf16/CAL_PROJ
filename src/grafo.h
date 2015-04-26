@@ -50,14 +50,17 @@ class Vertex {
 	bool visited;
 	double lat;
 	double lon;
-	double x;
-	double y;
+	double x, centeredX;
+	double y, centeredY;
+	bool drawed;
+ 
 public:
+	Vertex(long long in, double lat, double lon, double x, double y, double centeredX, double centeredY);
 	Vertex(long long in);
 	Vertex(long long in, double lat, double lon, double x, double y);
 	friend class Graph;
 	friend bool operator==(Vertex lhs, Vertex rhs);
-	void removeVertex(const long & in);
+	void removeVertex(const long long  &in);
 	void addEdge(Edge e);
 	long long getId() const {
 		return id;
@@ -106,23 +109,48 @@ public:
 	void setY(double y) {
 		this->y = y;
 	}
+	double getCenteredX() const {
+		return centeredX;
+	}
+
+	void setCenteredX(double centeredX) {
+		this->centeredX = centeredX;
+	}
+
+	double getCenteredY() const {
+		return centeredY;
+	}
+
+	void setCenteredY(double centeredY) {
+		this->centeredY = centeredY;
+	}
+
+	bool isDrawed() const {
+		return drawed;
+	}
+
+	void setDrawed(bool drawed) {
+		this->drawed = drawed;
+	}
 };
+
 
 class Graph {
 	vector<Vertex *> vertexSet;
-	double minLat;
-	double maxLat;
-	double minLon;
-	double maxLon;
+ 	vector<Edge> edgeSet;
+	double minLat, maxLat, minLon, maxLon;
+	double centerX, centerY;
+	double width, height;
 public:
+ 
 	vector<Vertex *> getVertexSet() const;
 	int getNumVertex() const;
 	bool addVertex(const long & in);
 	bool addVertex(Vertex * v);
 	void addEdge(Edge e);
-	bool addEdge(const long & sourc, const long & dest, double w);
-	bool addEdge(const long & sourc, const long & dest, double w, const long idEdge);
-	Vertex * findVertex(const long &info);
+	bool addEdge(const long long & sourc, const long long & dest, double w);
+	bool addEdge(const long long & sourc, const long long  & dest, double w, const long long idEdge);
+	Vertex * findVertex(const long long  &info);
 	bool removeVertex(const long &in);
 	bool removeEdge(const long &sourc, const long &dest);
 	int getEdgeSize(const long &inf);
@@ -139,5 +167,27 @@ public:
 	void setMinLat(double minLat);
 	double getMinLon() const;
 	void setMinLon(double minLon);
+ 
+	double getCenterX() const;
+
+	void setCenterX(double centerX);
+
+	double getCenterY() const;
+
+	void setCenterY(double centerY);
+
+	double getHeight() const;
+
+	void setHeight(double height);
+
+	double getWidth() const;
+
+	void setWidth(double width);
+	void addToEdgeSet(Edge e)
+	{
+		edgeSet.push_back(e);
+	}
+ 
 };
+ 
 #endif /* SRC_GRAFO_H_ */

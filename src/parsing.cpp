@@ -12,7 +12,8 @@
 #include <list>
 #include <map>
 #include <iomanip>
-
+#include <stdlib.h>
+#include "Util.h"
 long long stringToLongLong(string s) {
 	long long tempNum;
 	stringstream(s) >> tempNum;
@@ -41,7 +42,78 @@ double rad2deg(double rad) {
 	return (rad * 180 / PI);
 }
 
-void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph &grafo) {
+typedef struct {
+	bool operator()(const Edge &e, const Edge &e1) {
+		return e.getWeight() < e1.getWeight();
+	}
+
+} comprableEdge;
+typedef struct {
+
+	double minPath;
+	vector<Edge> e;
+	vector<Vertex*> v;
+} MST;
+Edge deleteMin(vector<Edge> &e) {
+
+	Edge f = e[0];
+	//cout << f.getOrig()->getId() << " D: " << f.getDest()->getId() << endl;
+
+	e.erase(e.begin());
+	return f;
+}
+void printVector(vector<Vertex*> edgeV) {
+	for (size_t i = 0; i < edgeV.size(); i++) {
+		cout <<   edgeV[i]->getId()    << endl;
+	}
+}
+void printVector(vector<Edge> edgeV) {
+	for (size_t i = 0; i < edgeV.size(); i++) {
+		cout << "SOURCE: " << edgeV[i].getOrig()->getId() << " DESTINY: " << edgeV[i].getDest()->getId() << "  Weight: " << edgeV[i].getWeight() << endl;
+	}
+}
+MST kruskal(vector<Edge> edgeV, disjointSet &dis) {
+	MST mst;
+	mst.minPath = 0;
+	int edgesAccepted = 0;
+	vector<Vertex*> final;
+	make_heap(edgeV.begin(), edgeV.end(), comprableEdge());
+	sort_heap(edgeV.begin(), edgeV.end(), comprableEdge());
+	//printVector(edgeV);
+	string s;
+	getline(cin, s);
+	while (edgesAccepted < dis.getCount() - 1) {
+		if (edgeV.size() <= 0) {
+			cout << "END" << endl;
+			break;
+
+		}
+		Edge e = deleteMin(edgeV); // e = (u,v)
+		
+			vector<Vertex*>& uset = dis.findSet(e.getDest());
+			vector<Vertex*>& vset = dis.findSet(e.getOrig());
+			if (uset != vset) { //ver != usar uset e vset modificar função que tinha e fazer overload do operador != para disjoined sets I think I know how to fix
+				edgesAccepted++;
+				mst.minPath += e.getWeight();
+ 
+				dis.mergeSet(uset, vset);
+				 
+				cout << " S: " << e.getOrig()->getId() << " D: " << e.getDest()->getId() << "  P " << e.getWeight() << endl;
+				//cout << " S: " << e.getOrig()->getId() << " D: " << e.getDest()->getId() << "  P " << e.getWeight() << endl;
+
+			}
+
+		}
+
+	
+	dis.deleteZeros();
+	cout << dis.getCount() << "  " << dis.getDisjoinedSet().size() << endl;
+	mst.v = final;
+	return mst;
+}
+
+void loadParse(string nodeFileName, string roadFile, string edgeFileName,
+	Graph &grafo) {
 	ifstream nodeRead, roadRead, edgeRead;
 
 	long long idSource, idEdge, idDest, idNode;
@@ -57,22 +129,30 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 	if (!nodeRead.fail()) {
 		int count = 0;
 		double x, y;
+		double minLat, maxLat, minLon, maxLon;
+		double minY, maxY, minX, maxX;
+		double centerX, centerY;
 		stringstream tempStream;
 
-		getline(nodeRead, s, ';');
+		minX = 181;
+		maxX = -181;
+		minY = 91;
+		maxY = -91;
+
 		//READING 4 FIRST NUMBERS, MIN/MAX LAT/LON
-		grafo.setMinLat(stringToDouble(s));
 		getline(nodeRead, s, ';');
-		grafo.setMaxLat(stringToDouble(s));
+		minLat = stringToDouble(s);
+		grafo.setMinLat(minLat);
 		getline(nodeRead, s, ';');
-		grafo.setMinLon(stringToDouble(s));
+		maxLat = stringToDouble(s);
+		grafo.setMaxLat(maxLat);
 		getline(nodeRead, s, ';');
-		grafo.setMaxLon(stringToDouble(s));
+		minLon = stringToDouble(s);
+		grafo.setMinLon(minLon);
+		getline(nodeRead, s, ';');
+		maxLon = stringToDouble(s);
+		grafo.setMaxLon(maxLon);
 		getline(nodeRead, s, '\n');
-//		cout << "A latitude min e " << grafo.getMinLat() << endl;
-//		cout << "A latitude max e " << grafo.getMaxLat() << endl;
-//		cout << "A longitude min e " << grafo.getMinLon() << endl;
-//		cout << "A longitude e max" << grafo.getMaxLon() << endl;
 
 		while (!nodeRead.eof()) {
 			getline(nodeRead, s, ';');
@@ -82,35 +162,54 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 			getline(nodeRead, s, ';');
 			lon = stringToDouble(s);
 			getline(nodeRead, s, ';');
-			x = stringToDouble(s);
-			getline(nodeRead, s);
 			y = stringToDouble(s);
-			getline(nodeRead, s, '\n'); //Same as getline(nodeRead, s);
+			getline(nodeRead, s);
+			x = stringToDouble(s);
+			//getline(nodeRead, s, '\n'); //Same as getline(nodeRead, s);
 
 			if (nodeRead.eof()) //This line is needed because the parser has a empty line at its end
 				break;
+			//UPDATING MIN/MAX X/Y
+			if (x > maxX) {
+				maxX = x;
 
-			Vertex* vertexNew = new Vertex(idNode, lat, lon, x, y);
+			}
+			else if (x < minX) {
+				minX = x;
+			}
+			if (y > maxY) {
+				maxY = y;
+			}
+			else if (y < minY) {
+				minY = y;
+			}
+
+			//centeredX is x-centerX -> by decreasing X by the maps center X, we can center all the points around the origin (0,0)
+			Vertex* vertexNew = new Vertex(idNode, lat, lon, x, y, 0, 0);
 			vertexMap.insert(pair<long long, Vertex*>(idNode, vertexNew));
-
-			cout << setprecision(10);
-			cout << count++ << endl;
-//			cout << "O idNode e " << idNode << endl;
-//			cout << "A latitude e " << lat << endl;
-//			cout << "A longitude e " << lon << endl;
-			cout << "O idNode do inserido e " << vertexMap[idNode]->getId()
-					<< endl;
-			cout << "A latitude do inserido e " << vertexMap[idNode]->getLat()
-					<< endl;
-			cout << "A longitude do inserido e " << vertexMap[idNode]->getLon()
-					<< endl;
-			cout << "O x do inserido e " << vertexMap[idNode]->getX() << endl;
-			cout << "O y do inserido e " << vertexMap[idNode]->getY() << endl
-					<< endl;
-
+ 
 		}
-		cout << "Existem " << vertexMap.size() << " vertices." << endl << endl;
-	} else {
+
+		//Now that we have min/max x/y, we can calculate centerX and centerY with it
+		centerX = (maxX + minX) / 2;
+		centerY = (maxY + minY) / 2;
+		grafo.setCenterX((maxX + minX) / 2);
+		grafo.setCenterY((maxY + minY) / 2);
+		grafo.setWidth(maxX - minX);
+		grafo.setHeight(maxY - minY);
+
+
+		//And now that we have the centerX and centerY, we can set all the vertex centeredX and Y values
+		map<long long, Vertex*>::iterator it = vertexMap.begin();
+		map<long long, Vertex*>::iterator ite = vertexMap.end();
+
+		for (it = vertexMap.begin(); it != ite; it++) {
+			it->second->setCenteredX(it->second->getX() - centerX);
+			it->second->setCenteredY(it->second->getY() - centerY);
+		}
+ 
+	}
+	else {
 		cout << "Node file unexistent.\n";
 	}
 	nodeRead.close();
@@ -134,13 +233,10 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 			tempRoadMap[idEdge] = roadName;
 			string roadName1 = tempRoadMap[idEdge];
 
-			cout << count++ << endl;
-			cout << "O idEdge e " << idEdge << endl;
-			cout << "A estrada lida e " << roadName << endl;
-			cout << "A estrada no map e " << roadName1 << endl << endl;
-
+	 
 		}
-	} else {
+	}
+	else {
 		cout << "Road file unexistent.\n";
 	}
 	roadRead.close();
@@ -151,17 +247,14 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 	if (!edgeRead.fail()) {
 		while (!edgeRead.eof()) {
 
-			cout << "Edge nr. " << count++ << endl;
-			cout << "Reading idEdge, idSource, idDest" << endl;
-			//add edges
+	 
 			getline(edgeRead, s, ';');
 			idEdge = stringToLongLong(s);
 			getline(edgeRead, s, ';');
 			idSource = stringToLongLong(s);
 			getline(edgeRead, s, ';');
 			idDest = stringToLongLong(s);
-			//getline(edgeRead, s, '\n');
-
+	 
 			if (edgeRead.eof()) //This line is needed because the parser has a empty line at its end
 				break;
 
@@ -169,35 +262,31 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 			Vertex* org = vertexMap[idSource];
 			Vertex* dest = vertexMap[idDest];
 
-			double peso = distance(org->getLat(), org->getLon(), dest->getLat(), dest->getLon());
-			cout << setprecision(10);
-			cout << "org->getLat() : " << org->getLat() << endl;
-			cout << "org->getLon() : " << org->getLon() << endl;
-			cout << "dest->getLat() : " << dest->getLat() << endl;
-			cout << "dest->getLon() : " << dest->getLon() << endl;
-			cout << "org->getId() : " << org->getId() << endl;
-			cout << "O peso disto e: " << peso << endl << endl;
+			double peso = distance(org->getLat(), org->getLon(), dest->getLat(),
+				dest->getLon());
+	 
 
 			Edge e(org, dest, roadName, peso, idEdge);
-			 Edge f(dest, org, roadName, peso, idEdge);
+			Edge f(dest, org, roadName, peso, idEdge);
 			org->addEdge(e);
 			dest->addEdge(f);
 			//We assume that there is no edge where org and dest are the same node
+			grafo.addToEdgeSet(e);
+			
 
-			//cout << "O peso e: " << peso << endl;
-			//cout << "Edge id: " << idEdge << " where idOrig is " << org->getId() << " and idDest is " << dest->getId() << endl << endl;
-			//cout << "Edge id: " << idEdge << " where edge weight pulled from origin " << org->getAdj()[0].getWeight() << " and idDest is " << dest->getId() << endl << endl;
+		 
 		}
-	} else {
+	}
+	else {
 		cout << "Edge file unexistent.\n";
 	}
-	cout << "Creating Disjoint Set" << endl;
-
+ 
 	edgeRead.close();
 	getline(cin, s);
+
 	disjointSet d(vertexMap);
-	cout << vertexMap.size() << endl;
 	d.createDisjoinedSet();
+	cout << vertexMap.size() << endl;
 	cout << d.getDisjoinedSet().size() << endl;
 	d.getCount();
 }
@@ -210,11 +299,4 @@ double distance(double lat1, double lon1, double lat2, double lon2) {
 	dist = rad2deg(dist);
 	dist = dist * 60 * 1.1515;
 	return dist * 1.609344;
-}
-
-int main() {
-//	Graph grafo;
-//	loadParse("files/tondelinha/tond1.txt", "files/tondelinha/tond2.txt", "files/tondelinha/tond3.txt", grafo);
-	menu();
-	return 0;
 }

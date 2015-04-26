@@ -23,10 +23,12 @@ private:
 
 public:
 	disjointSet();
+	void createSet();
 	disjointSet(map<long long, Vertex*> toBeProcessed);
+	void createSet(vector<Vertex*> vec);
 	void createSet(Vertex *v);
-	void mergeSet(vector<Vertex *> &vec, vector<Vertex*> &vec2);
-	Vertex* findSet(long long id);
+	vector<Vertex *>  mergeSet(vector<Vertex *> &vec, vector<Vertex*> &vec2);
+	vector<Vertex*>& findSet(Vertex *v);
 	void createDisjoinedSet();
 	void createDisjoinedSet(Vertex *v, vector<Vertex *> &vec);
 	vector<vector<Vertex *> > getDisjoinedSet() const;
@@ -35,12 +37,20 @@ public:
 	void setFirstId(long long firstId);
 	map<long long, Vertex*> getToBeProcessed() const;
 	void setToBeProcessed(const map<long long, Vertex*> toBeProcessed);
-	void getCount() {
+	int getCount() {
 		int count = 0;
-		for (int i = 0; i < disjoinedSet.size(); i++) {
+		for (size_t i = 0; i < disjoinedSet.size(); i++) {
 			count += disjoinedSet[i].size();
 		}
-		cout << count << endl;
+		return count;
+	}
+	void deleteZeros() {
+		for (size_t i = 0; i < disjoinedSet.size(); i++) {
+			if (disjoinedSet[i].size() == 0) {
+				disjoinedSet.erase(disjoinedSet.begin() + i);
+				i -= 1;
+			}
+		}
 	}
 };
 #endif
