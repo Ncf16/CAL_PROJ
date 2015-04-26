@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <vector>
-#include <dirent.h>
+//#include <dirent.h>
 #include <windows.h>
 #include <iostream>
 #include <string.h>

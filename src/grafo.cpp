@@ -5,9 +5,8 @@
  *      Author: Filipe
  */
 #include "grafo.h"
-#include<iostream>
-#include<climits>
-#include <algorithm>
+
+using namespace std;
 void Vertex::removeVertex(const long long & in) {
 	for (size_t i = 0; i < adj.size(); i++) {
 		if (*(adj[i].getDest()) == in) {
@@ -68,12 +67,12 @@ vector<long> Graph::bfs(Vertex * v) const {
 	return answer;
 }
 
-vector<long> Graph::dfs() const {
+vector<long> Graph::dfs(vector<Vertex*> vec) const {
 
 	vector<long> answer;
-	for (size_t i = 0; i < vertexSet.size(); i++) {
-		if (!vertexSet[i]->visited) {
-			dfs(answer, vertexSet[i]);
+	for (size_t i = 0; i < vec.size(); i++) {
+		if (!vec[i]->visited) {
+			dfs(answer, vec[i]);
 		}
 	}
 	return answer;
@@ -87,125 +86,6 @@ void Graph::dfs(vector<long> &vec, Vertex* v) const {
 			dfs(vec, v->adj[i].dest);
 		}
 	}
-}
-int Graph::getEdgeSize(const long &inf) {
-	Vertex *source = findVertex(inf);
-	return source->adj.size();
-}
-
-bool Graph::removeVertex(const long &in) {
-
-	Vertex *v = findVertex(in);
-	if (v == NULL)
-		return false;
-
-	for (size_t i = 0; i < vertexSet.size(); i++) {
-
-		if ((*vertexSet[i]) == (*v)) {
-			vertexSet.erase(vertexSet.begin() + i);
-			i -= 2;
-		} else
-			vertexSet[i]->removeVertex(in);
-	}
-	return true;
-}
-
-bool Graph::addEdge(const long long & sourc, const long long & dest, double w) {
-
-	Vertex *source = findVertex(sourc);
-	Vertex *destiny = findVertex(dest);
-
-	if (source == NULL || destiny == NULL)
-		return false;
-	Edge e(destiny, w);
-	e.setOrig(source);
-	source->adj.push_back(e);
-	Edge f(source, w);
-	f.setOrig(destiny);
-	destiny->adj.push_back(f);
-
-	return true;
-}
-
-bool Graph::addEdge(const long long & sourc, const long long & dest, double w, long long id) {
-
-	Vertex *source = findVertex(sourc);
-	Vertex *destiny = findVertex(dest);
-
-	if (source == NULL || destiny == NULL)
-		return false;
-	Edge e(destiny, w);
-	e.id = id;
-	source->adj.push_back(e);
-
-	return true;
-}
-
-Vertex * Graph::findVertex(const long long &info) {
-	for (size_t i = 0; i < vertexSet.size(); i++) {
-		if (vertexSet[i]->getId() == info) {
-			return vertexSet[i];
-		}
-	}
-	return NULL;
-}
-bool Graph::removeEdge(const long &sourc, const long &dest) {
-	bool found = false;
-	Vertex *source = findVertex(sourc);
-	Vertex *destiny = findVertex(dest);
-	if (source == NULL || destiny == NULL)
-		return false;
-
-	vector<Edge> e = source->adj;
-	for (size_t i = 0; i < e.size(); i++) {
-		if (*e[i].getDest() == *destiny) {
-			source->adj.erase(source->adj.begin() + i);
-			e = source->adj;
-			i -= 2;
-			found = true;
-		}
-	}
-	return found;
-}
-bool Graph::addVertex(const long &in) {
-	if (getNumVertex() == 0) {
-		vertexSet.push_back(new Vertex(in));
-		vertexSet[vertexSet.size() - 1]->visited = false;
-		return true;
-	} else {
-		for (size_t i = 0; i < vertexSet.size(); i++) {
-			if (vertexSet[i]->id == in) {
-				return false;
-			}
-		}
-	}
-	vertexSet.push_back(new Vertex(in));
-	vertexSet[vertexSet.size() - 1]->visited = false;
-	return true;
-}
-
-int Graph::getNumVertex() const {
-	return vertexSet.size();
-}
-
-vector<Vertex *> Graph::getVertexSet() const {
-	return vertexSet;
-}
-
-bool Graph::addVertex(Vertex *v) {
-	if (getNumVertex() == 0) {
-		vertexSet.push_back(v);
-		return true;
-	} else {
-		for (size_t i = 0; i < vertexSet.size(); i++) {
-			if (vertexSet[i] == v) {
-				return false;
-			}
-		}
-	}
-
-	return true;
-
 }
 
 double Graph::getMaxLat() const {
@@ -282,4 +162,46 @@ void Graph::setWidth(double width) {
 
 Vertex::Vertex(long long in, double lat, double lon, double x, double y, double centeredX, double centeredY) :
 		id(in), visited(false), lat(lat), lon(lon), x(x), y(y), centeredX(centeredX), centeredY(centeredY) {
+}
+
+void Graph::createDisjoinedSet(map<long long, Vertex*> toBeProcessed) {
+
+	map<long long, Vertex*>::iterator it = toBeProcessed.begin();
+	map<long long, Vertex*>::iterator ite = toBeProcessed.end();
+	cout << "DisjoinedSet" << endl;
+	for (; it != ite; it++) {
+		it->second->setVisited(false);
+	}
+	it = toBeProcessed.begin();
+	int i = 0;
+	for (; it != ite; it++) {
+		vector<Vertex *> res;
+		if (!it->second->isVisited()) {
+			createDisjoinedSet(it->second, res);
+			vertexSet.push_back(res);
+
+
+		}
+		i++;
+	}
+
+}
+
+void Graph::createDisjoinedSet(Vertex *v, vector<Vertex *> &vec) {
+
+	v->setVisited(true);
+
+	vec.push_back(v);
+	vector<Edge>::iterator it = v->getAdj().begin();
+	vector<Edge>::iterator ite = v->getAdj().end();
+	for (; it != ite; it++) {
+		if (!it->getDest()->isVisited()) {
+			createDisjoinedSet(it->getDest(), vec);
+		}
+	 	if (!it->getOrig()->isVisited()) {
+			createDisjoinedSet(it->getOrig(), vec);
+		}
+
+	}
+
 }

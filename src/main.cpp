@@ -3,9 +3,7 @@
  *
  *  Created on: 26/04/2015
  *      Author: Filipe
- */
-
-
+*/
 
 #include "parsing.h"
 #include "grafo.h"

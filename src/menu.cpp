@@ -1,5 +1,5 @@
 #include "menu.h"
-
+/*
 using namespace std;
 void menu() {
 	Graph grafo;
@@ -182,3 +182,4 @@ int RestringeOpcaoTeclas(int min, int max, int opcao) {
 	else
 		return opcao; //se não se verificam as restrições, entao devolve-se novamente a variavel intacta
 }
+*/

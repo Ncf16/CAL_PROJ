@@ -19,12 +19,10 @@ class disjointSet {
 private:
 	//priority_queue<vector<Vertex *>, vector<vector<Vertex *> >, compareSize>
 	vector<vector<Vertex *> > disjoinedSet;
-	map<long long, Vertex*> toBeProcessed;
 
 public:
 	disjointSet();
 	void createSet();
-	disjointSet(map<long long, Vertex*> toBeProcessed);
 	void createSet(vector<Vertex*> vec);
 	void createSet(Vertex *v);
 	vector<Vertex *>  mergeSet(vector<Vertex *> &vec, vector<Vertex*> &vec2);
@@ -35,7 +33,6 @@ public:
 	void setDisjoinedSet(const vector<vector<Vertex *> > disjoinedSet);
 	long long getFirstId() const;
 	void setFirstId(long long firstId);
-	map<long long, Vertex*> getToBeProcessed() const;
 	void setToBeProcessed(const map<long long, Vertex*> toBeProcessed);
 	int getCount() {
 		int count = 0;

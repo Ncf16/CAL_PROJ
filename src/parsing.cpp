@@ -64,7 +64,7 @@ Edge deleteMin(vector<Edge> &e) {
 }
 void printVector(vector<Vertex*> edgeV) {
 	for (size_t i = 0; i < edgeV.size(); i++) {
-		cout <<   edgeV[i]->getId()    << endl;
+		cout << edgeV[i]->getId() << endl;
 	}
 }
 void printVector(vector<Edge> edgeV) {
@@ -89,31 +89,29 @@ MST kruskal(vector<Edge> edgeV, disjointSet &dis) {
 
 		}
 		Edge e = deleteMin(edgeV); // e = (u,v)
-		
-			vector<Vertex*>& uset = dis.findSet(e.getDest());
-			vector<Vertex*>& vset = dis.findSet(e.getOrig());
-			if (uset != vset) { //ver != usar uset e vset modificar função que tinha e fazer overload do operador != para disjoined sets I think I know how to fix
-				edgesAccepted++;
-				mst.minPath += e.getWeight();
- 
-				dis.mergeSet(uset, vset);
-				 
-				cout << " S: " << e.getOrig()->getId() << " D: " << e.getDest()->getId() << "  P " << e.getWeight() << endl;
-				//cout << " S: " << e.getOrig()->getId() << " D: " << e.getDest()->getId() << "  P " << e.getWeight() << endl;
 
-			}
+		vector<Vertex*>& uset = dis.findSet(e.getDest());
+		vector<Vertex*>& vset = dis.findSet(e.getOrig());
+		if (uset != vset) { //ver != usar uset e vset modificar função que tinha e fazer overload do operador != para disjoined sets I think I know how to fix
+			edgesAccepted++;
+			mst.minPath += e.getWeight();
+
+			dis.mergeSet(uset, vset);
+
+			cout << " S: " << e.getOrig()->getId() << " D: " << e.getDest()->getId() << "  P " << e.getWeight() << endl;
+			//cout << " S: " << e.getOrig()->getId() << " D: " << e.getDest()->getId() << "  P " << e.getWeight() << endl;
 
 		}
 
-	
+	}
+
 	dis.deleteZeros();
 	cout << dis.getCount() << "  " << dis.getDisjoinedSet().size() << endl;
 	mst.v = final;
 	return mst;
 }
 
-void loadParse(string nodeFileName, string roadFile, string edgeFileName,
-	Graph &grafo) {
+void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph &grafo) {
 	ifstream nodeRead, roadRead, edgeRead;
 
 	long long idSource, idEdge, idDest, idNode;
@@ -173,21 +171,19 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName,
 			if (x > maxX) {
 				maxX = x;
 
-			}
-			else if (x < minX) {
+			} else if (x < minX) {
 				minX = x;
 			}
 			if (y > maxY) {
 				maxY = y;
-			}
-			else if (y < minY) {
+			} else if (y < minY) {
 				minY = y;
 			}
 
 			//centeredX is x-centerX -> by decreasing X by the maps center X, we can center all the points around the origin (0,0)
 			Vertex* vertexNew = new Vertex(idNode, lat, lon, x, y, 0, 0);
 			vertexMap.insert(pair<long long, Vertex*>(idNode, vertexNew));
- 
+
 		}
 
 		//Now that we have min/max x/y, we can calculate centerX and centerY with it
@@ -198,7 +194,6 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName,
 		grafo.setWidth(maxX - minX);
 		grafo.setHeight(maxY - minY);
 
-
 		//And now that we have the centerX and centerY, we can set all the vertex centeredX and Y values
 		map<long long, Vertex*>::iterator it = vertexMap.begin();
 		map<long long, Vertex*>::iterator ite = vertexMap.end();
@@ -207,9 +202,8 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName,
 			it->second->setCenteredX(it->second->getX() - centerX);
 			it->second->setCenteredY(it->second->getY() - centerY);
 		}
- 
-	}
-	else {
+
+	} else {
 		cout << "Node file unexistent.\n";
 	}
 	nodeRead.close();
@@ -233,10 +227,8 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName,
 			tempRoadMap[idEdge] = roadName;
 			string roadName1 = tempRoadMap[idEdge];
 
-	 
 		}
-	}
-	else {
+	} else {
 		cout << "Road file unexistent.\n";
 	}
 	roadRead.close();
@@ -247,14 +239,13 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName,
 	if (!edgeRead.fail()) {
 		while (!edgeRead.eof()) {
 
-	 
 			getline(edgeRead, s, ';');
 			idEdge = stringToLongLong(s);
 			getline(edgeRead, s, ';');
 			idSource = stringToLongLong(s);
 			getline(edgeRead, s, ';');
 			idDest = stringToLongLong(s);
-	 
+
 			if (edgeRead.eof()) //This line is needed because the parser has a empty line at its end
 				break;
 
@@ -262,9 +253,7 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName,
 			Vertex* org = vertexMap[idSource];
 			Vertex* dest = vertexMap[idDest];
 
-			double peso = distance(org->getLat(), org->getLon(), dest->getLat(),
-				dest->getLon());
-	 
+			double peso = distance(org->getLat(), org->getLon(), dest->getLat(), dest->getLon());
 
 			Edge e(org, dest, roadName, peso, idEdge);
 			Edge f(dest, org, roadName, peso, idEdge);
@@ -272,23 +261,21 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName,
 			dest->addEdge(f);
 			//We assume that there is no edge where org and dest are the same node
 			grafo.addToEdgeSet(e);
-			
 
-		 
 		}
-	}
-	else {
+	} else {
 		cout << "Edge file unexistent.\n";
 	}
- 
-	edgeRead.close();
-	getline(cin, s);
 
-	disjointSet d(vertexMap);
-	d.createDisjoinedSet();
-	cout << vertexMap.size() << endl;
-	cout << d.getDisjoinedSet().size() << endl;
-	d.getCount();
+	edgeRead.close();
+	cout << "Dis" << endl;
+	getline(cin, s);
+	grafo.createDisjoinedSet(vertexMap);
+//	disjointSet d(vertexMap);
+//	d.createDisjoinedSet();
+ 	cout << vertexMap.size() << endl;
+ 	cout << grafo.getVertexSet().size() << endl;
+//	d.getCount();
 }
 //ver link
 double distance(double lat1, double lon1, double lat2, double lon2) {

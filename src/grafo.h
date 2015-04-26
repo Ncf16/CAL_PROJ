@@ -9,7 +9,12 @@
 
 #include <vector>
 #include <queue>
+#include <map>
 #include<string>
+#include<iostream>
+#include<climits>
+#include <algorithm>
+
 using namespace std;
 
 class Graph;
@@ -50,17 +55,19 @@ class Vertex {
 	bool visited;
 	double lat;
 	double lon;
-	double x, centeredX;
-	double y, centeredY;
+	double x;
+	double centeredX;
+	double y;
+	double centeredY;
 	bool drawed;
- 
+
 public:
 	Vertex(long long in, double lat, double lon, double x, double y, double centeredX, double centeredY);
 	Vertex(long long in);
 	Vertex(long long in, double lat, double lon, double x, double y);
 	friend class Graph;
 	friend bool operator==(Vertex lhs, Vertex rhs);
-	void removeVertex(const long long  &in);
+	void removeVertex(const long long &in);
 	void addEdge(Edge e);
 	long long getId() const {
 		return id;
@@ -134,27 +141,32 @@ public:
 	}
 };
 
-
 class Graph {
-	vector<Vertex *> vertexSet;
- 	vector<Edge> edgeSet;
+	vector<vector<Vertex *> > vertexSet;
+	vector<Edge> edgeSet;
 	double minLat, maxLat, minLon, maxLon;
 	double centerX, centerY;
 	double width, height;
 public:
- 
-	vector<Vertex *> getVertexSet() const;
-	int getNumVertex() const;
+
+	vector<vector<Vertex *> > getVertexSet()
+	{
+		return vertexSet;
+	}
+	int getNumVertex() const
+	{
+		return vertexSet.size();
+	}
 	bool addVertex(const long & in);
 	bool addVertex(Vertex * v);
 	void addEdge(Edge e);
 	bool addEdge(const long long & sourc, const long long & dest, double w);
-	bool addEdge(const long long & sourc, const long long  & dest, double w, const long long idEdge);
-	Vertex * findVertex(const long long  &info);
+	bool addEdge(const long long & sourc, const long long & dest, double w, const long long idEdge);
+	Vertex * findVertex(const long long &info, vector<Vertex*> vec);
 	bool removeVertex(const long &in);
 	bool removeEdge(const long &sourc, const long &dest);
 	int getEdgeSize(const long &inf);
-	vector<long> dfs() const;
+	vector<long> dfs(vector<Vertex*> vec) const;
 	void dfs(vector<long> &vec, Vertex * v) const;
 	vector<long> bfs(Vertex * v) const;
 	void bfs(vector<long> &vec, Vertex * v) const;
@@ -167,27 +179,28 @@ public:
 	void setMinLat(double minLat);
 	double getMinLon() const;
 	void setMinLon(double minLon);
- 
 	double getCenterX() const;
-
 	void setCenterX(double centerX);
-
 	double getCenterY() const;
-
 	void setCenterY(double centerY);
-
 	double getHeight() const;
-
 	void setHeight(double height);
-
 	double getWidth() const;
-
 	void setWidth(double width);
-	void addToEdgeSet(Edge e)
-	{
+	void addToEdgeSet(Edge e) {
 		edgeSet.push_back(e);
 	}
- 
+	void createDisjoinedSet(map<long long, Vertex*> toBeProcessed);
+	void createDisjoinedSet(Vertex *v, vector<Vertex *> &vec);
+	const vector<Edge>& getEdgeSet() const {
+		return edgeSet;
+	}
+	void setEdgeSet(const vector<Edge>& edgeSet) {
+		this->edgeSet = edgeSet;
+	}
+	void setVertexSet(const vector<vector<Vertex*> >& vertexSet) {
+		this->vertexSet = vertexSet;
+	}
 };
- 
+
 #endif /* SRC_GRAFO_H_ */
