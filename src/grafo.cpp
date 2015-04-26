@@ -270,8 +270,10 @@ void Graph::createDisjoinedSet(Vertex *v, vector<Vertex *> &vec) {
  * adds centrals to the graph
  */
 void Graph::addCentrals() {
+	int counter = edgeSet.size();
 	for (size_t i = 0; i < vertexSet.size(); i++) {
-		addCentralsAux(vertexSet[i], i);
+		addCentralsAux(vertexSet[i], counter);
+		counter++;
 	}
 }
 /**
@@ -347,11 +349,11 @@ void Graph::graphDisplay() {
 		Vertex* dest = tempEdges[i].getDest();
 
 		if (org->isDrawed() == false) {
-			gv->addNode(org->getId(), org->getX(), org->getY());
+			gv->addNode(org->getId(), org->getX() * 1.0 * (600.0 / width), org->getY() * 1.0 * (600.0 / height));
 			org->setDrawed(true);
 		}
 		if (dest->isDrawed() == false) {
-			gv->addNode(dest->getId(), dest->getX(), dest->getY());
+			gv->addNode(dest->getId(), dest->getX() * 1.0 * (600.0 / width), dest->getY() * 1.0 * (600.0 / height));
 			dest->setDrawed(true);
 		}
 
