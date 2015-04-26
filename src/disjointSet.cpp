@@ -7,10 +7,14 @@
 
 #include "disjointSet.h"
 #include<fstream>
-
+/**
+ * disjoint set constructor
+ */
 disjointSet::disjointSet() {
 }
-
+/**
+ * creates a disjoint set with a vector of vertices
+ */
 void disjointSet::createSet(vector<Vertex*> vec) {
 
 	vector<Vertex*>::iterator it = vec.begin();
@@ -19,13 +23,17 @@ void disjointSet::createSet(vector<Vertex*> vec) {
 		createSet(*it);
 	}
 }
+/**
+ * creates a disjoint set with a single vertice
+ */
 void disjointSet::createSet(Vertex *v) {
 	vector<Vertex*> vec;
 	vec.push_back(v);
 	disjoinedSet.push_back(vec);
 }
-
-
+/**
+ * retunrs a vector with with two disjoint sets merged
+ */
 vector<Vertex *> disjointSet::mergeSet(vector<Vertex *> &vec, vector<Vertex*> &vec2) {
 
 	if (vec.size() > vec2.size()) {
@@ -49,6 +57,9 @@ vector<Vertex *> disjointSet::mergeSet(vector<Vertex *> &vec, vector<Vertex*> &v
 	vector<Vertex *> v;
 	return v;
 }
+/**
+ * returns the set where the vertex v is in
+ */
 vector<Vertex*>& disjointSet::findSet(Vertex *v) { //TODO try to alterar algoritmo,
 	for (size_t i = 0; i < disjoinedSet.size(); i++) {
 
@@ -60,10 +71,15 @@ vector<Vertex*>& disjointSet::findSet(Vertex *v) { //TODO try to alterar algorit
 	vector<Vertex *> vec;
 	return vec;
 }
+/**
+ * gets the disjoint set
+ */
 vector<vector<Vertex *> > disjointSet::getDisjoinedSet() const {
 	return disjoinedSet;
 }
-
+/**
+ * sets the disjoint set
+ */
 void disjointSet::setDisjoinedSet(const vector<vector<Vertex *> > disjoinedSet) {
 	this->disjoinedSet = disjoinedSet;
 }

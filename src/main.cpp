@@ -8,6 +8,9 @@
 #include "parsing.h"
 #include "grafo.h"
 #include "disjointSet.h"
+/**
+ * main function
+ */
 int main() {
 	Graph grafo;
 	cout << "Here" << endl;

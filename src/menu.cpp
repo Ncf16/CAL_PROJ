@@ -1,6 +1,9 @@
 #include "menu.h"
 
 using namespace std;
+/**
+ * menu function
+ */
 void menu(Graph &grafo) {
 
 	//string nodes = "Nodes", roads="Roads",edges="Edges";
@@ -92,7 +95,9 @@ void gotoxy(int xpos, int ypos)  // just take this function as it is.
 	scrn.Y = ypos;
 	SetConsoleCursorPosition(hOuput, scrn);
 }
-
+/**
+ * get the names of all the zones available
+ */
 vector<string> getDirFiles() {
 	vector<string> files;
 	DIR *dir;
@@ -107,7 +112,9 @@ vector<string> getDirFiles() {
 	}
 	return files;
 }
-
+/**
+ * prints the scroll menu
+ */
 void printMenuScroll(vector<string> options, int selected_option,
 		const unsigned int max_per_screen) {
 	int min = selected_option - (max_per_screen / 2);
@@ -144,14 +151,18 @@ void printMenuScroll(vector<string> options, int selected_option,
 
 	}
 }
-
+/**
+ * sets the colours in the menu
+ */
 // First 4 bits are background, last 4 bits are foreground
 void cor(int background, int foreground) {
 	HANDLE hConsole;
 	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, foreground + 16 * background);
 }
-
+/**
+ * gets the key inputs
+ */
 int teclas() {
 	int tecla;
 	tecla = getch();
@@ -174,6 +185,9 @@ int teclas() {
 }
 
 //FUNCAO RESPONSAVEL POR RESTRINGIR A VARIAVEL "opcao"
+/**
+ * restricts the opcao variable
+ */
 int RestringeOpcaoTeclas(int min, int max, int opcao) {
 	if (opcao > min && opcao < ((max * -1) + 13))
 		return opcao = (-1 * max); //reinicia a variavel na ultima opcao do menu

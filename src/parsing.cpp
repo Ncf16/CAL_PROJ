@@ -33,10 +33,15 @@ double stringToDouble(string s) {
 
 	return tempNum;
 }
-
+/**
+ * converts degrees to radians
+ */
 double deg2rad(double deg) {
 	return (deg * PI / 180);
 }
+/**
+ * converts radians to degrees
+ */
 double rad2deg(double rad) {
 	return (rad * 180 / PI);
 }
@@ -53,6 +58,7 @@ typedef struct {
 	vector<Edge> e;
 	vector<Vertex*> v;
 } MST;
+
 Edge deleteMin(vector<Edge> &e) {
 
 	Edge f = e[0];
@@ -61,11 +67,17 @@ Edge deleteMin(vector<Edge> &e) {
 	e.erase(e.begin());
 	return f;
 }
+/**
+ * prints a vector of vertices
+ */
 void printVector(vector<Vertex*> edgeV) {
 	for (size_t i = 0; i < edgeV.size(); i++) {
 		cout << edgeV[i]->getId() << endl;
 	}
 }
+/**
+ * prints a vector of edges
+ */
 void printVector(vector<Edge> edgeV) {
 	for (size_t i = 0; i < edgeV.size(); i++) {
 		cout << "SOURCE: " << edgeV[i].getOrig()->getId() << " DESTINY: " << edgeV[i].getDest()->getId() << "  Weight: " << edgeV[i].getWeight() << endl;
@@ -109,6 +121,9 @@ void printVector(vector<Edge> edgeV) {
  mst.v = final;
  return mst;
  }
+ */
+/**
+ * loads the parser
  */
 void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph &grafo) {
 	ifstream nodeRead, roadRead, edgeRead;
@@ -276,7 +291,9 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 	cout << grafo.getVertexSet().size() << endl;
 
 }
-
+/**
+ * calculates the distance between two points
+ */
 double distance(double lat1, double lon1, double lat2, double lon2) {
 	double theta, dist;
 	theta = lon1 - lon2;
