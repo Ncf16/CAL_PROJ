@@ -270,8 +270,10 @@ void Graph::createDisjoinedSet(Vertex *v, vector<Vertex *> &vec) {
  * adds centrals to the graph
  */
 void Graph::addCentrals() {
+	int counter = edgeSet.size();
 	for (size_t i = 0; i < vertexSet.size(); i++) {
-		addCentralsAux(vertexSet[i], i);
+		addCentralsAux(vertexSet[i], counter);
+		counter++;
 	}
 }
 /**

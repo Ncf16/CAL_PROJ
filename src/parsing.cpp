@@ -203,7 +203,7 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 		}
 
 	} else {
-		cout << "Node file unexistent.\n";
+		cout << "Node file inexistent.\n";
 	}
 	nodeRead.close();
 	//READING ROAD FILE
@@ -228,13 +228,13 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 
 		}
 	} else {
-		cout << "Road file unexistent.\n";
+		cout << "Road file inexistent.\n";
 	}
 	roadRead.close();
 
 	//READING EDGE FILE
 	edgeRead.open(edgeFileName.c_str());
-	int count = 0;
+	int counter = 0;
 	if (!edgeRead.fail()) {
 		while (!edgeRead.eof()) {
 
@@ -254,16 +254,18 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 
 			double peso = distance(org->getLat(), org->getLon(), dest->getLat(), dest->getLon());
 
-			Edge e(org, dest, roadName, peso, idEdge);
-			Edge f(dest, org, roadName, peso, idEdge);
+
+			Edge e(org, dest, roadName, peso, counter);
+			Edge f(dest, org, roadName, peso, counter);
 			org->addEdge(e);
 			dest->addEdge(f);
 			//We assume that there is no edge where org and dest are the same node
 			grafo.addToEdgeSet(e);
+			counter++;
 
 		}
 	} else {
-		cout << "Edge file unexistent.\n";
+		cout << "Edge file inexistent.\n";
 	}
 
 	printVector(grafo.getEdgeSet());
