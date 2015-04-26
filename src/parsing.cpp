@@ -41,7 +41,8 @@ double rad2deg(double rad) {
 	return (rad * 180 / PI);
 }
 
-void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph &grafo) {
+void loadParse(string nodeFileName, string roadFile, string edgeFileName,
+		Graph &grafo) {
 	ifstream nodeRead, roadRead, edgeRead;
 
 	long long idSource, idEdge, idDest, idNode;
@@ -62,6 +63,11 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 		double centerX, centerY;
 		stringstream tempStream;
 
+		minX = -181;
+		maxX = 181;
+		minY = -91;
+		maxY = 91;
+
 		//READING 4 FIRST NUMBERS, MIN/MAX LAT/LON
 		getline(nodeRead, s, ';');
 		minLat = stringToDouble(s);
@@ -76,20 +82,6 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 		maxLon = stringToDouble(s);
 		grafo.setMaxLon(maxLon);
 		getline(nodeRead, s, '\n');
-
-		minX = minLon* (PI/180);
-		maxX = maxLon* (PI/180);
-		minY = minLat* (PI/180);
-		maxY = maxLat* (PI/180);
-		grafo.setCenterX((maxX+minX)/2);
-		grafo.setCenterY((maxY+minY)/2);
-		grafo.setWidth(maxX-minX);
-		grafo.setHeight(maxY-minY);
-
-//		cout << "A latitude min e " << grafo.getMinLat() << endl;
-//		cout << "A latitude max e " << grafo.getMaxLat() << endl;
-//		cout << "A longitude min e " << grafo.getMinLon() << endl;
-//		cout << "A longitude e max" << grafo.getMaxLon() << endl;
 
 		while (!nodeRead.eof()) {
 			getline(nodeRead, s, ';');
@@ -106,13 +98,23 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 
 			if (nodeRead.eof()) //This line is needed because the parser has a empty line at its end
 				break;
+			//UPDATING MIN/MAX X/Y
+			if (x > maxX) {
+				maxX = x;
+
+			} else if (x < minX) {
+				minX = x;
+			}
+			if (y > maxY) {
+				maxY = y;
+			} else if (y < minY) {
+				minY = y;
+			}
 
 			//centeredX is x-centerX -> by decreasing X by the maps center X, we can center all the points around the origin (0,0)
-			Vertex* vertexNew = new Vertex(idNode, lat, lon, x, y,x-centerX , y-centerY);
+			Vertex* vertexNew = new Vertex(idNode, lat, lon, x, y, 0, 0);
 			vertexMap.insert(pair<long long, Vertex*>(idNode, vertexNew));
 
-			cout << setprecision(10);
-			cout << count++ << endl;
 //			cout << "O idNode e " << idNode << endl;
 //			cout << "A latitude e " << lat << endl;
 //			cout << "A longitude e " << lon << endl;
@@ -127,7 +129,43 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 //					<< endl;
 
 		}
-//		cout << "Existem " << vertexMap.size() << " vertices." << endl << endl;
+
+		//Now that we have min/max x/y, we can calculate centerX and centerY with it
+		centerX = (maxX + minX) / 2;
+		centerY = (maxY + minY) / 2;
+		grafo.setCenterX((maxX + minX) / 2);
+		grafo.setCenterY((maxY + minY) / 2);
+		grafo.setWidth(maxX - minX);
+		grafo.setHeight(maxY - minY);
+
+
+		//And now that we have the centerX and centerY, we can set all the vertex centeredX and Y values
+		map<long long, Vertex*>::iterator it = vertexMap.begin();
+		map<long long, Vertex*>::iterator ite = vertexMap.end();
+
+		for (it = vertexMap.begin(); it != ite; it++) {
+			it->second->setCenteredX(it->second->getX() - centerX);
+			it->second->setCenteredY(it->second->getY() - centerY);
+		}
+
+		cout << setprecision(10);
+		cout << count++ << endl;
+		cout << "A latitude min e " << grafo.getMinLat() << endl;
+		cout << "A latitude max e " << grafo.getMaxLat() << endl;
+		cout << "A longitude min e " << grafo.getMinLon() << endl;
+		cout << "A longitude e max" << grafo.getMaxLon() << endl << endl;
+
+		cout << "O min X e " << minX << endl;
+		cout << "O max X e " << maxX << endl;
+		cout << "O min Y e " << minY << endl;
+		cout << "O max Y e " << maxY << endl << endl;
+
+		cout << "A width e " << maxX - minX << endl;
+		cout << "A height e " << maxY - minY << endl << endl;
+
+		cout << "O x central e " << (maxX + minX) / 2 << endl;
+		cout << "O y central e " << (maxY + minY) / 2 << endl << endl;
+
 	} else {
 		cout << "Node file unexistent.\n";
 	}
@@ -187,7 +225,8 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 			Vertex* org = vertexMap[idSource];
 			Vertex* dest = vertexMap[idDest];
 
-			double peso = distance(org->getLat(), org->getLon(), dest->getLat(), dest->getLon());
+			double peso = distance(org->getLat(), org->getLon(), dest->getLat(),
+					dest->getLon());
 //			cout << setprecision(10);
 //			cout << "org->getLat() : " << org->getLat() << endl;
 //			cout << "org->getLon() : " << org->getLon() << endl;
@@ -197,7 +236,7 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 //			cout << "O peso disto e: " << peso << endl << endl;
 
 			Edge e(org, dest, roadName, peso, idEdge);
-			 Edge f(dest, org, roadName, peso, idEdge);
+			Edge f(dest, org, roadName, peso, idEdge);
 			org->addEdge(e);
 			dest->addEdge(f);
 			//We assume that there is no edge where org and dest are the same node
@@ -223,7 +262,8 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 double distance(double lat1, double lon1, double lat2, double lon2) {
 	double theta, dist;
 	theta = lon1 - lon2;
-	dist = sin(deg2rad(lat1)) * sin(deg2rad(lat2)) + cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * cos(deg2rad(theta));
+	dist = sin(deg2rad(lat1)) * sin(deg2rad(lat2))
+			+ cos(deg2rad(lat1)) * cos(deg2rad(lat2)) * cos(deg2rad(theta));
 	dist = acos(dist);
 	dist = rad2deg(dist);
 	dist = dist * 60 * 1.1515;
@@ -232,7 +272,8 @@ double distance(double lat1, double lon1, double lat2, double lon2) {
 
 int main() {
 	Graph grafo;
-	loadParse("files/tondelinha/tond1.txt", "files/tondelinha/tond2.txt", "files/tondelinha/tond3.txt", grafo);
+	loadParse("files/tondelinha/tond1.txt", "files/tondelinha/tond2.txt",
+			"files/tondelinha/tond3.txt", grafo);
 	menu();
 //	return 0;
 }

@@ -106,6 +106,22 @@ public:
 	void setY(double y) {
 		this->y = y;
 	}
+
+	double getCenteredX() const {
+		return centeredX;
+	}
+
+	void setCenteredX(double centeredX) {
+		this->centeredX = centeredX;
+	}
+
+	double getCenteredY() const {
+		return centeredY;
+	}
+
+	void setCenteredY(double centeredY) {
+		this->centeredY = centeredY;
+	}
 };
 
 class Graph {
