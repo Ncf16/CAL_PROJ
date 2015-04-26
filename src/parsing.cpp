@@ -85,7 +85,7 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 			y = stringToDouble(s);
 			getline(nodeRead, s);
 			x = stringToDouble(s);
-			getline(nodeRead, s, '\n'); //Same as getline(nodeRead, s);
+			//getline(nodeRead, s, '\n'); //Same as getline(nodeRead, s);
 
 			if (nodeRead.eof()) //This line is needed because the parser has a empty line at its end
 				break;
@@ -98,18 +98,18 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 //			cout << "O idNode e " << idNode << endl;
 //			cout << "A latitude e " << lat << endl;
 //			cout << "A longitude e " << lon << endl;
-			cout << "O idNode do inserido e " << vertexMap[idNode]->getId()
-					<< endl;
-			cout << "A latitude do inserido e " << vertexMap[idNode]->getLat()
-					<< endl;
-			cout << "A longitude do inserido e " << vertexMap[idNode]->getLon()
-					<< endl;
-			cout << "O x do inserido e " << vertexMap[idNode]->getX() << endl;
-			cout << "O y do inserido e " << vertexMap[idNode]->getY() << endl
-					<< endl;
+//			cout << "O idNode do inserido e " << vertexMap[idNode]->getId()
+//					<< endl;
+//			cout << "A latitude do inserido e " << vertexMap[idNode]->getLat()
+//					<< endl;
+//			cout << "A longitude do inserido e " << vertexMap[idNode]->getLon()
+//					<< endl;
+//			cout << "O x do inserido e " << vertexMap[idNode]->getX() << endl;
+//			cout << "O y do inserido e " << vertexMap[idNode]->getY() << endl
+//					<< endl;
 
 		}
-		cout << "Existem " << vertexMap.size() << " vertices." << endl << endl;
+//		cout << "Existem " << vertexMap.size() << " vertices." << endl << endl;
 	} else {
 		cout << "Node file unexistent.\n";
 	}
@@ -134,10 +134,10 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 			tempRoadMap[idEdge] = roadName;
 			string roadName1 = tempRoadMap[idEdge];
 
-			cout << count++ << endl;
-			cout << "O idEdge e " << idEdge << endl;
-			cout << "A estrada lida e " << roadName << endl;
-			cout << "A estrada no map e " << roadName1 << endl << endl;
+//			cout << count++ << endl;
+//			cout << "O idEdge e " << idEdge << endl;
+//			cout << "A estrada lida e " << roadName << endl;
+//			cout << "A estrada no map e " << roadName1 << endl << endl;
 
 		}
 	} else {
@@ -151,8 +151,8 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 	if (!edgeRead.fail()) {
 		while (!edgeRead.eof()) {
 
-			cout << "Edge nr. " << count++ << endl;
-			cout << "Reading idEdge, idSource, idDest" << endl;
+//			cout << "Edge nr. " << count++ << endl;
+//			cout << "Reading idEdge, idSource, idDest" << endl;
 			//add edges
 			getline(edgeRead, s, ';');
 			idEdge = stringToLongLong(s);
@@ -170,13 +170,13 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 			Vertex* dest = vertexMap[idDest];
 
 			double peso = distance(org->getLat(), org->getLon(), dest->getLat(), dest->getLon());
-			cout << setprecision(10);
-			cout << "org->getLat() : " << org->getLat() << endl;
-			cout << "org->getLon() : " << org->getLon() << endl;
-			cout << "dest->getLat() : " << dest->getLat() << endl;
-			cout << "dest->getLon() : " << dest->getLon() << endl;
-			cout << "org->getId() : " << org->getId() << endl;
-			cout << "O peso disto e: " << peso << endl << endl;
+//			cout << setprecision(10);
+//			cout << "org->getLat() : " << org->getLat() << endl;
+//			cout << "org->getLon() : " << org->getLon() << endl;
+//			cout << "dest->getLat() : " << dest->getLat() << endl;
+//			cout << "dest->getLon() : " << dest->getLon() << endl;
+//			cout << "org->getId() : " << org->getId() << endl;
+//			cout << "O peso disto e: " << peso << endl << endl;
 
 			Edge e(org, dest, roadName, peso, idEdge);
 			 Edge f(dest, org, roadName, peso, idEdge);
@@ -185,13 +185,13 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 			//We assume that there is no edge where org and dest are the same node
 
 			//cout << "O peso e: " << peso << endl;
-			//cout << "Edge id: " << idEdge << " where idOrig is " << org->getId() << " and idDest is " << dest->getId() << endl << endl;
-			//cout << "Edge id: " << idEdge << " where edge weight pulled from origin " << org->getAdj()[0].getWeight() << " and idDest is " << dest->getId() << endl << endl;
+//			cout << "Edge id: " << idEdge << " where idOrig is " << org->getId() << " and idDest is " << dest->getId() << endl << endl;
+//			cout << "Edge id: " << idEdge << " where edge weight pulled from origin " << org->getAdj()[0].getWeight() << " and idDest is " << dest->getId() << endl << endl;
 		}
 	} else {
 		cout << "Edge file unexistent.\n";
 	}
-	cout << "Creating Disjoint Set" << endl;
+	//cout << "Creating Disjoint Set" << endl;
 
 	edgeRead.close();
 	getline(cin, s);
@@ -213,8 +213,8 @@ double distance(double lat1, double lon1, double lat2, double lon2) {
 }
 
 int main() {
-//	Graph grafo;
-//	loadParse("files/tondelinha/tond1.txt", "files/tondelinha/tond2.txt", "files/tondelinha/tond3.txt", grafo);
+	Graph grafo;
+	loadParse("files/tondelinha/tond1.txt", "files/tondelinha/tond2.txt", "files/tondelinha/tond3.txt", grafo);
 	menu();
-	return 0;
+//	return 0;
 }
