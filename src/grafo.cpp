@@ -329,7 +329,9 @@ void Graph::addCentralsAux(vector<Vertex*> &vec, const int &count) {
 		}
 	}
 }
-
+/**
+ * displays the graph
+ */
 void Graph::graphDisplay() {
 	GraphViewer *gv = new GraphViewer(600, 600, false);
 	gv->createWindow(600, 600);
