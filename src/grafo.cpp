@@ -26,8 +26,10 @@ Vertex::Vertex(long long in) :
 		id(in), visited(false), lat(0), lon(0), x(0), y(0) {
 }
 
-Vertex::Vertex(long long in, double lat, double lon, double x, double y,double centeredX, double centeredY) :
-		id(in), visited(false), lat(lat), lon(lon), x(x), y(y), centeredX(centeredX), centeredY(centeredY) {
+Vertex::Vertex(long long in, double lat, double lon, double x, double y,
+		double centeredX, double centeredY) :
+		id(in), visited(false), lat(lat), lon(lon), x(x), y(y), centeredX(
+				centeredX), centeredY(centeredY) {
 }
 
 void Vertex::addEdge(Edge e) {
@@ -254,6 +256,22 @@ double Graph::getCenterY() const {
 
 void Graph::setCenterY(double centerY) {
 	this->centerY = centerY;
+}
+
+double Graph::getHeight() const {
+	return height;
+}
+
+void Graph::setHeight(double height) {
+	this->height = height;
+}
+
+double Graph::getWidth() const {
+	return width;
+}
+
+void Graph::setWidth(double width) {
+	this->width = width;
 }
 
 Vertex* Edge::getOrig() const {

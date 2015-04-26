@@ -81,8 +81,10 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 		maxX = maxLon* (PI/180);
 		minY = minLat* (PI/180);
 		maxY = maxLat* (PI/180);
-		grafo.setCenterX((maxX-minX)/2);
-		grafo.setCenterY((maxY-minY)/2);
+		grafo.setCenterX((maxX+minX)/2);
+		grafo.setCenterY((maxY+minY)/2);
+		grafo.setWidth(maxX-minX);
+		grafo.setHeight(maxY-minY);
 
 //		cout << "A latitude min e " << grafo.getMinLat() << endl;
 //		cout << "A latitude max e " << grafo.getMaxLat() << endl;

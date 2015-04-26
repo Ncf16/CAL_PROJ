@@ -110,12 +110,9 @@ public:
 
 class Graph {
 	vector<Vertex *> vertexSet;
-	double minLat;
-	double maxLat;
-	double minLon;
-	double maxLon;
-	double centerX;
-	double centerY;
+	double minLat, maxLat, minLon, maxLon;
+	double centerX, centerY;
+	double width, height;  // these are in terms of X and Y, not  lat and lon
 public:
 	vector<Vertex *> getVertexSet() const;
 	int getNumVertex() const;
@@ -149,5 +146,13 @@ public:
 	double getCenterY() const;
 
 	void setCenterY(double centerY);
+
+	double getHeight() const;
+
+	void setHeight(double height);
+
+	double getWidth() const;
+
+	void setWidth(double width);
 };
 #endif /* SRC_GRAFO_H_ */
