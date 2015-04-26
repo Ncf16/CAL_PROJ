@@ -13,7 +13,8 @@
 #include<string>
 #include<iostream>
 #include<climits>
-#include <algorithm>
+
+#include "graphviewer.h"
 
 using namespace std;
 
@@ -44,6 +45,22 @@ public:
 	}
 	Vertex* getOrig() const;
 	void setOrig(Vertex* orig);
+
+	long long getId() const {
+		return id;
+	}
+
+	void setId(long long id) {
+		this->id = id;
+	}
+
+	string getName() const {
+		return name;
+	}
+
+	void setName(const string& name) {
+		this->name = name;
+	}
 
 	friend class Graph;
 	friend class Vertex;
@@ -200,7 +217,8 @@ public:
 		this->vertexSet = vertexSet;
 	}
 	void addCentrals();
-	void addCentralsAux(vector<Vertex*>& vec,const int &count);
+	void addCentralsAux(vector<Vertex*>& vec, const int &count);
+	void graphDisplay();
 };
 
 #endif /* SRC_GRAFO_H_ */

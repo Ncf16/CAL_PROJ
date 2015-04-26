@@ -5,15 +5,6 @@
  *      Author: Filipe
  */
 #include "parsing.h"
-#include "grafo.h"
-#include "compare.h"
-#include <math.h>
-#include "disjointSet.h"
-#include <list>
-#include <map>
-#include <iomanip>
-#include <stdlib.h>
-#include "Util.h"
 long long stringToLongLong(string s) {
 	long long tempNum;
 	stringstream(s) >> tempNum;
@@ -23,7 +14,15 @@ long long stringToLongLong(string s) {
 
 	return tempNum;
 }
+string LongLongToString(long long s) {
+	stringstream stream;
+	stream << s;
 
+	return stream.str();
+
+//	cout << "Numero em String: " << s << endl;
+//	cout << "Numero transformado: " << tempNum << endl << endl;
+}
 double stringToDouble(string s) {
 	double tempNum;
 	stringstream(s) >> tempNum;
@@ -72,45 +71,45 @@ void printVector(vector<Edge> edgeV) {
 		cout << "SOURCE: " << edgeV[i].getOrig()->getId() << " DESTINY: " << edgeV[i].getDest()->getId() << "  Weight: " << edgeV[i].getWeight() << endl;
 	}
 }
-MST kruskal(vector<Edge> edgeV, disjointSet &dis) {
-	MST mst;
-	mst.minPath = 0;
-	int edgesAccepted = 0;
-	vector<Vertex*> final;
-	make_heap(edgeV.begin(), edgeV.end(), comprableEdge());
-	sort_heap(edgeV.begin(), edgeV.end(), comprableEdge());
-	//printVector(edgeV);
-	string s;
-	getline(cin, s);
-	while (edgesAccepted < dis.getCount() - 1) {
-		if (edgeV.size() <= 0) {
-			cout << "END" << endl;
-			break;
+/*MST kruskal(vector<Edge> edgeV, disjointSet &dis) {
+ MST mst;
+ mst.minPath = 0;
+ int edgesAccepted = 0;
+ vector<Vertex*> final;
+ make_heap(edgeV.begin(), edgeV.end(), comprableEdge());
+ sort_heap(edgeV.begin(), edgeV.end(), comprableEdge());
+ //printVector(edgeV);
+ string s;
+ getline(cin, s);
+ while (edgesAccepted < dis.getCount() - 1) {
+ if (edgeV.size() <= 0) {
+ cout << "END" << endl;
+ break;
 
-		}
-		Edge e = deleteMin(edgeV); // e = (u,v)
+ }
+ Edge e = deleteMin(edgeV); // e = (u,v)
 
-		vector<Vertex*>& uset = dis.findSet(e.getDest());
-		vector<Vertex*>& vset = dis.findSet(e.getOrig());
-		if (uset != vset) { //ver != usar uset e vset modificar função que tinha e fazer overload do operador != para disjoined sets I think I know how to fix
-			edgesAccepted++;
-			mst.minPath += e.getWeight();
+ vector<Vertex*>& uset = dis.findSet(e.getDest());
+ vector<Vertex*>& vset = dis.findSet(e.getOrig());
+ if (uset != vset) { //ver != usar uset e vset modificar função que tinha e fazer overload do operador != para disjoined sets I think I know how to fix
+ edgesAccepted++;
+ mst.minPath += e.getWeight();
 
-			dis.mergeSet(uset, vset);
+ dis.mergeSet(uset, vset);
 
-			cout << " S: " << e.getOrig()->getId() << " D: " << e.getDest()->getId() << "  P " << e.getWeight() << endl;
-			//cout << " S: " << e.getOrig()->getId() << " D: " << e.getDest()->getId() << "  P " << e.getWeight() << endl;
+ cout << " S: " << e.getOrig()->getId() << " D: " << e.getDest()->getId() << "  P " << e.getWeight() << endl;
+ //cout << " S: " << e.getOrig()->getId() << " D: " << e.getDest()->getId() << "  P " << e.getWeight() << endl;
 
-		}
+ }
 
-	}
+ }
 
-	dis.deleteZeros();
-	cout << dis.getCount() << "  " << dis.getDisjoinedSet().size() << endl;
-	mst.v = final;
-	return mst;
-}
-
+ dis.deleteZeros();
+ cout << dis.getCount() << "  " << dis.getDisjoinedSet().size() << endl;
+ mst.v = final;
+ return mst;
+ }
+ */
 void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph &grafo) {
 	ifstream nodeRead, roadRead, edgeRead;
 
@@ -273,8 +272,8 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 	grafo.createDisjoinedSet(vertexMap);
 //	disjointSet d(vertexMap);
 //	d.createDisjoinedSet();
- 	cout << vertexMap.size() << endl;
- 	cout << grafo.getVertexSet().size() << endl;
+	cout << vertexMap.size() << endl;
+	cout << grafo.getVertexSet().size() << endl;
 
 }
 
