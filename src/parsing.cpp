@@ -63,10 +63,10 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName,
 		double centerX, centerY;
 		stringstream tempStream;
 
-		minX = -181;
-		maxX = 181;
-		minY = -91;
-		maxY = 91;
+		minX = 181;
+		maxX = -181;
+		minY = 91;
+		maxY = -91;
 
 		//READING 4 FIRST NUMBERS, MIN/MAX LAT/LON
 		getline(nodeRead, s, ';');
@@ -148,23 +148,23 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName,
 			it->second->setCenteredY(it->second->getY() - centerY);
 		}
 
-		cout << setprecision(10);
-		cout << count++ << endl;
-		cout << "A latitude min e " << grafo.getMinLat() << endl;
-		cout << "A latitude max e " << grafo.getMaxLat() << endl;
-		cout << "A longitude min e " << grafo.getMinLon() << endl;
-		cout << "A longitude e max" << grafo.getMaxLon() << endl << endl;
-
-		cout << "O min X e " << minX << endl;
-		cout << "O max X e " << maxX << endl;
-		cout << "O min Y e " << minY << endl;
-		cout << "O max Y e " << maxY << endl << endl;
-
-		cout << "A width e " << maxX - minX << endl;
-		cout << "A height e " << maxY - minY << endl << endl;
-
-		cout << "O x central e " << (maxX + minX) / 2 << endl;
-		cout << "O y central e " << (maxY + minY) / 2 << endl << endl;
+//		cout << setprecision(10);
+//		cout << count++ << endl;
+//		cout << "A latitude min e " << grafo.getMinLat() << endl;
+//		cout << "A latitude max e " << grafo.getMaxLat() << endl;
+//		cout << "A longitude min e " << grafo.getMinLon() << endl;
+//		cout << "A longitude e max" << grafo.getMaxLon() << endl << endl;
+//
+//		cout << "O min X e " << minX << endl;
+//		cout << "O max X e " << maxX << endl;
+//		cout << "O min Y e " << minY << endl;
+//		cout << "O max Y e " << maxY << endl << endl;
+//
+//		cout << "A width e " << maxX - minX << endl;
+//		cout << "A height e " << maxY - minY << endl << endl;
+//
+//		cout << "O x central e " << (maxX + minX) / 2 << endl;
+//		cout << "O y central e " << (maxY + minY) / 2 << endl << endl;
 
 	} else {
 		cout << "Node file unexistent.\n";
