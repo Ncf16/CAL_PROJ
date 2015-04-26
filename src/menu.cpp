@@ -1,8 +1,8 @@
 #include "menu.h"
-/*
+
 using namespace std;
-void menu() {
-	Graph grafo;
+void menu(Graph &grafo) {
+
 	//string nodes = "Nodes", roads="Roads",edges="Edges";
 	vector<string> menu_options = getDirFiles();
 	int opcao = 0;
@@ -182,4 +182,3 @@ int RestringeOpcaoTeclas(int min, int max, int opcao) {
 	else
 		return opcao; //se não se verificam as restrições, entao devolve-se novamente a variavel intacta
 }
-*/

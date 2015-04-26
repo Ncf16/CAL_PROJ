@@ -6,13 +6,14 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <vector>
-//#include <dirent.h>
+#include <dirent.h>
 #include <windows.h>
 #include <iostream>
 #include <string.h>
 #include <fstream>
 #include <algorithm>
 #include "parsing.h"
+#include "grafo.h"
 
 using namespace std;
 
@@ -32,7 +33,7 @@ using namespace std;
 /** Maximo de items a mostar no ecra, quando se usa o scroll */
 const unsigned int MAX_PER_SCREEN = 6;
 
-void menu();
+void menu(Graph &grafo);
 
 /**
  * Mete o cursor numa posicao do ecra, para se poder escrever nesse local diretamente
