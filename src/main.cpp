@@ -11,7 +11,7 @@
 int main() {
 	Graph grafo;
 	cout << "Here" << endl;
-	//loadParse("files/teste/test1.txt", "files/teste/test2.txt", "files/teste/test3.txt", grafo);
+	loadParse("./files/tondelinha/tond1.txt", "./files/tondelinha/tond2.txt", "./files/tondelinha/tond3.txt", grafo);
 
 	//Graph myGraph;
 /*
@@ -99,7 +99,7 @@ int main() {
 	 break;
 	 }
 		}*/
-	menu(grafo);
+	//menu(grafo);
 
 	grafo.graphDisplay();
 	return 0;

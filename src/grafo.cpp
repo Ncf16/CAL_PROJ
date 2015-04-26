@@ -347,11 +347,11 @@ void Graph::graphDisplay() {
 		Vertex* dest = tempEdges[i].getDest();
 
 		if (org->isDrawed() == false) {
-			gv->addNode(org->getId(), org->getX(), org->getY());
+			gv->addNode(org->getId(), org->getX() * 1.0 * (600.0 / width), org->getY() * 1.0 * (600.0 / height));
 			org->setDrawed(true);
 		}
 		if (dest->isDrawed() == false) {
-			gv->addNode(dest->getId(), dest->getX(), dest->getY());
+			gv->addNode(dest->getId(), dest->getX() * 1.0 * (600.0 / width), dest->getY() * 1.0 * (600.0 / height));
 			dest->setDrawed(true);
 		}
 

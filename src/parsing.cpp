@@ -68,7 +68,7 @@ void printVector(vector<Vertex*> edgeV) {
 }
 void printVector(vector<Edge> edgeV) {
 	for (size_t i = 0; i < edgeV.size(); i++) {
-		cout << "SOURCE: " << edgeV[i].getOrig()->getId() << " DESTINY: " << edgeV[i].getDest()->getId() << "  Weight: " << edgeV[i].getWeight() << endl;
+		cout<<"ID: "<<edgeV[i].getId() << " SOURCE: " << edgeV[i].getOrig()->getId() << " DESTINY: " << edgeV[i].getDest()->getId() << "  Weight: " << edgeV[i].getWeight() << endl;
 	}
 }
 /*MST kruskal(vector<Edge> edgeV, disjointSet &dis) {
@@ -266,6 +266,7 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 		cout << "Edge file unexistent.\n";
 	}
 
+	printVector(grafo.getEdgeSet());
 	edgeRead.close();
 	cout << "Dis" << endl;
 	getline(cin, s);
