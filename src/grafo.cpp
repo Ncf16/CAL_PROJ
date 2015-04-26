@@ -5,7 +5,7 @@
  *      Author: Filipe
  */
 #include "grafo.h"
-
+#include "parsing.h"
 using namespace std;
 
 void Vertex::removeVertex(const long long & in) {
@@ -229,7 +229,7 @@ void Graph::addCentralsAux(vector<Vertex*> &vec, const int &count) {
 			double newY = vec[j]->getY();
 			double newX = deg2rad(newLon);
 			double newLat = vec[j]->getLat();
-			Vertex * central(count, newLat, newLon, newX, newY, newX - centerX, newY - centerY);
+			Vertex * central = new Vertex(count, newLat, newLon, newX, newY, newX - centerX, newY - centerY);
 
 			double peso = distance(vec[j]->getLat(), vec[j]->getLon(), newLat, newLon);
 			Edge e(central, vec[j], "Road to Central", peso, count);
@@ -248,7 +248,7 @@ void Graph::addCentralsAux(vector<Vertex*> &vec, const int &count) {
 			double newY = vec[j]->getY();
 			double newX = deg2rad(newLon);
 			double newLat = vec[j]->getLat();
-			Vertex * central(count, newLat, newLon, newX, newY, newX - centerX, newY - centerY);
+			Vertex * central = new Vertex(count, newLat, newLon, newX, newY, newX - centerX, newY - centerY);
 
 			double peso = distance(vec[j]->getLat(), vec[j]->getLon(), newLat, newLon);
 			Edge e(central, vec[j], "Road to Central", peso, count);
@@ -263,5 +263,38 @@ void Graph::addCentralsAux(vector<Vertex*> &vec, const int &count) {
 			return;
 		}
 	}
-
 }
+
+void Graph::graphDisplay() {
+	GraphViewer *gv = new GraphViewer(600, 600, false);
+	gv->createWindow(600, 600);
+
+	gv->defineEdgeColor("blue");
+	gv->defineVertexColor("yellow");
+
+	vector<Edge> tempEdges = edgeSet;
+	long long edgeId;
+	for (size_t i = 0; i < tempEdges.size(); i++) {
+		edgeId = tempEdges[i].getId();
+		Vertex* org = tempEdges[i].getOrig();
+		Vertex* dest = tempEdges[i].getDest();
+
+		if (org->isDrawed() == false) {
+			gv->addNode(org->getId(), org->getX(), org->getY());
+			org->setDrawed(true);
+		}
+		if (dest->isDrawed() == false) {
+			gv->addNode(dest->getId(), dest->getX(), dest->getY());
+			dest->setDrawed(true);
+		}
+
+		gv->addEdge(edgeId, org->getId(), dest->getId(), EdgeType::UNDIRECTED);
+		if (tempEdges[i].getName() != "")
+			gv->setEdgeLabel(edgeId, tempEdges[i].getName());
+		else
+			gv->setEdgeLabel(edgeId, LongLongToString(edgeId));
+
+		gv->rearrange();
+	}
+}
+
