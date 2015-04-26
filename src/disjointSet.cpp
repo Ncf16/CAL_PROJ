@@ -49,7 +49,7 @@ vector<Vertex *> disjointSet::mergeSet(vector<Vertex *> &vec, vector<Vertex*> &v
 	vector<Vertex *> v;
 	return v;
 }
-vector<Vertex*>& disjointSet::findSet(Vertex *v) { //TODO alterar algoritmo
+vector<Vertex*>& disjointSet::findSet(Vertex *v) { //TODO try to alterar algoritmo,
 	for (size_t i = 0; i < disjoinedSet.size(); i++) {
 
 		for (size_t j = 0; j < disjoinedSet[i].size(); j++) {

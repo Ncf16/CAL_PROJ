@@ -7,6 +7,7 @@
 #include "grafo.h"
 
 using namespace std;
+
 void Vertex::removeVertex(const long long & in) {
 	for (size_t i = 0; i < adj.size(); i++) {
 		if (*(adj[i].getDest()) == in) {
@@ -15,6 +16,7 @@ void Vertex::removeVertex(const long long & in) {
 		}
 	}
 }
+
 bool operator==(Vertex lhs, Vertex rhs) {
 	if (lhs.getId() == rhs.getId())
 		return true;
@@ -38,7 +40,6 @@ Edge::Edge(Vertex*d, double w) : //TODO check if id should be 0
 		dest(d), weight(w), id(0) {
 }
 
-//ter id ou não
 Edge::Edge(Vertex *orig, Vertex*d, string name, double w, long long id) {
 	this->name = name;
 	this->dest = d;
@@ -77,6 +78,7 @@ vector<long> Graph::dfs(vector<Vertex*> vec) const {
 	}
 	return answer;
 }
+
 void Graph::dfs(vector<long> &vec, Vertex* v) const {
 	v->visited = true;
 	vec.push_back(v->id);
@@ -180,7 +182,6 @@ void Graph::createDisjoinedSet(map<long long, Vertex*> toBeProcessed) {
 			createDisjoinedSet(it->second, res);
 			vertexSet.push_back(res);
 
-
 		}
 		i++;
 	}
@@ -198,10 +199,69 @@ void Graph::createDisjoinedSet(Vertex *v, vector<Vertex *> &vec) {
 		if (!it->getDest()->isVisited()) {
 			createDisjoinedSet(it->getDest(), vec);
 		}
-	 	if (!it->getOrig()->isVisited()) {
+		if (!it->getOrig()->isVisited()) {
 			createDisjoinedSet(it->getOrig(), vec);
 		}
 
+	}
+
+}
+
+void Graph::addCentrals() {
+	for (size_t i = 0; i < vertexSet.size(); i++) {
+		addCentralsAux(vertexSet[i], i);
+	}
+}
+void Graph::addCentralsAux(vector<Vertex*> &vec, const int &count) {
+
+	double incLon = maxLon - minLon * 1.0;
+
+	if (incLon < 0.05)
+		incLon /= 10.0;
+	else
+		while (incLon >= 0.05) {
+			incLon /= 10.0;
+		}
+	//For is just to be safe, in case anything fails. It´s expected to work for the first node of every vector
+	for (size_t j = 0; j < vec.size(); j++) {
+		double newLon = vec[j]->getLon() + incLon;
+		if (newLon < maxLon) {
+			double newY = vec[j]->getY();
+			double newX = deg2rad(newLon);
+			double newLat = vec[j]->getLat();
+			Vertex * central(count, newLat, newLon, newX, newY, newX - centerX, newY - centerY);
+
+			double peso = distance(vec[j]->getLat(), vec[j]->getLon(), newLat, newLon);
+			Edge e(central, vec[j], "Road to Central", peso, count);
+			Edge f(vec[j], central, "Road to Central", peso, count);
+
+			central->addEdge(e);
+			vec[j]->addEdge(f);
+
+			vec.push_back(central);
+			edgeSet.push_back(e);
+			return;
+		}
+
+		else {
+			newLon = vec[j]->getLon() - incLon;
+			double newY = vec[j]->getY();
+			double newX = deg2rad(newLon);
+			double newLat = vec[j]->getLat();
+			Vertex * central(count, newLat, newLon, newX, newY, newX - centerX, newY - centerY);
+
+			double peso = distance(vec[j]->getLat(), vec[j]->getLon(), newLat, newLon);
+			Edge e(central, vec[j], "Road to Central", peso, count);
+			Edge f(vec[j], central, "Road to Central", peso, count);
+
+			central->addEdge(e);
+			vec[j]->addEdge(f);
+
+			vec.push_back(central);
+			edgeSet.push_back(e);
+
+			return;
+		}
 	}
 
 }

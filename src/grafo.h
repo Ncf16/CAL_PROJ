@@ -149,12 +149,10 @@ class Graph {
 	double width, height;
 public:
 
-	vector<vector<Vertex *> > getVertexSet()
-	{
+	vector<vector<Vertex *> > getVertexSet() {
 		return vertexSet;
 	}
-	int getNumVertex() const
-	{
+	int getNumVertex() const {
 		return vertexSet.size();
 	}
 	bool addVertex(const long & in);
@@ -201,6 +199,8 @@ public:
 	void setVertexSet(const vector<vector<Vertex*> >& vertexSet) {
 		this->vertexSet = vertexSet;
 	}
+	void addCentrals();
+	void addCentralsAux(vector<Vertex*>& vec,const int &count);
 };
 
 #endif /* SRC_GRAFO_H_ */

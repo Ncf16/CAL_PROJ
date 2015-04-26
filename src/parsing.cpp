@@ -275,9 +275,9 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 //	d.createDisjoinedSet();
  	cout << vertexMap.size() << endl;
  	cout << grafo.getVertexSet().size() << endl;
-//	d.getCount();
+
 }
-//ver link
+
 double distance(double lat1, double lon1, double lat2, double lon2) {
 	double theta, dist;
 	theta = lon1 - lon2;
