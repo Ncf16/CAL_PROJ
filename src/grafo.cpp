@@ -6,8 +6,9 @@
  */
 #include "grafo.h"
 #include<iostream>
-
-void Vertex::removeVertex(const long & in) {
+#include<climits>
+#include <algorithm>
+void Vertex::removeVertex(const long long & in) {
 	for (size_t i = 0; i < adj.size(); i++) {
 		if (*(adj[i].getDest()) == in) {
 			adj.erase(adj.begin() + i);
@@ -26,10 +27,8 @@ Vertex::Vertex(long long in) :
 		id(in), visited(false), lat(0), lon(0), x(0), y(0) {
 }
 
-Vertex::Vertex(long long in, double lat, double lon, double x, double y,
-		double centeredX, double centeredY) :
-		id(in), visited(false), lat(lat), lon(lon), x(x), y(y), centeredX(
-				centeredX), centeredY(centeredY) {
+Vertex::Vertex(long long in, double lat, double lon, double x, double y) :
+		id(in), visited(false), lat(lat), lon(lon), x(x), y(y) {
 }
 
 void Vertex::addEdge(Edge e) {
@@ -111,7 +110,7 @@ bool Graph::removeVertex(const long &in) {
 	return true;
 }
 
-bool Graph::addEdge(const long & sourc, const long & dest, double w) {
+bool Graph::addEdge(const long long & sourc, const long long & dest, double w) {
 
 	Vertex *source = findVertex(sourc);
 	Vertex *destiny = findVertex(dest);
@@ -119,11 +118,16 @@ bool Graph::addEdge(const long & sourc, const long & dest, double w) {
 	if (source == NULL || destiny == NULL)
 		return false;
 	Edge e(destiny, w);
+	e.setOrig(source);
 	source->adj.push_back(e);
+	Edge f(source, w);
+	f.setOrig(destiny);
+	destiny->adj.push_back(f);
+
 	return true;
 }
 
-bool Graph::addEdge(const long & sourc, const long & dest, double w, long id) {
+bool Graph::addEdge(const long long & sourc, const long long & dest, double w, long long id) {
 
 	Vertex *source = findVertex(sourc);
 	Vertex *destiny = findVertex(dest);
@@ -137,7 +141,7 @@ bool Graph::addEdge(const long & sourc, const long & dest, double w, long id) {
 	return true;
 }
 
-Vertex * Graph::findVertex(const long &info) {
+Vertex * Graph::findVertex(const long long &info) {
 	for (size_t i = 0; i < vertexSet.size(); i++) {
 		if (vertexSet[i]->getId() == info) {
 			return vertexSet[i];
@@ -203,12 +207,6 @@ bool Graph::addVertex(Vertex *v) {
 	return true;
 
 }
-void Graph::addEdge(Edge e) {
-
-	e.orig->adj.push_back(e);
-
-	//tentar adicionar ou tentar encontrar, ver como fazer + eficiente
-}
 
 double Graph::getMaxLat() const {
 	return maxLat;
@@ -240,6 +238,14 @@ double Graph::getMinLon() const {
 
 void Graph::setMinLon(double minLon) {
 	this->minLon = minLon;
+}
+
+Vertex* Edge::getOrig() const {
+	return orig;
+}
+
+void Edge::setOrig(Vertex* orig) {
+	this->orig = orig;
 }
 
 double Graph::getCenterX() const {
@@ -274,13 +280,6 @@ void Graph::setWidth(double width) {
 	this->width = width;
 }
 
-Vertex* Edge::getOrig() const {
-	return orig;
-}
-
-void Edge::setOrig(Vertex* orig) {
-	this->orig = orig;
-}
-
-vector<Vertex *> Graph::prim() {
+Vertex::Vertex(long long in, double lat, double lon, double x, double y, double centeredX, double centeredY) :
+		id(in), visited(false), lat(lat), lon(lon), x(x), y(y), centeredX(centeredX), centeredY(centeredY) {
 }

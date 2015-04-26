@@ -7,7 +7,24 @@
 
 #include "disjointSet.h"
 #include<fstream>
+
 disjointSet::disjointSet() {
+}
+void disjointSet::createSet() {
+
+	map<long long, Vertex*>::iterator it = toBeProcessed.begin();
+	map<long long, Vertex*>::iterator ite = toBeProcessed.end();
+	for (; it != ite; it++) {
+		createSet(it->second);
+	}
+}
+void disjointSet::createSet(vector<Vertex*> vec) {
+
+	vector<Vertex*>::iterator it = vec.begin();
+	vector<Vertex*>::iterator ite = vec.end();
+	for (; it != ite; it++) {
+		createSet(*it);
+	}
 }
 void disjointSet::createSet(Vertex *v) {
 	vector<Vertex*> vec;
@@ -17,10 +34,11 @@ void disjointSet::createSet(Vertex *v) {
 
 disjointSet::disjointSet(map<long long, Vertex*> toBeProcessed) {
 	this->toBeProcessed = toBeProcessed;
+	createSet();
 
 }
 
-void disjointSet::mergeSet(vector<Vertex *> &vec, vector<Vertex*> &vec2) {
+vector<Vertex *> disjointSet::mergeSet(vector<Vertex *> &vec, vector<Vertex*> &vec2) {
 
 	if (vec.size() > vec2.size()) {
 		for (size_t i = 0; i < vec2.size(); i++) {
@@ -40,8 +58,16 @@ void disjointSet::mergeSet(vector<Vertex *> &vec, vector<Vertex*> &vec2) {
 		}
 	}
 }
-Vertex* disjointSet::findSet(long long id) {
-	return toBeProcessed[id];
+vector<Vertex*>& disjointSet::findSet(Vertex *v) {
+	for (size_t i = 0; i < disjoinedSet.size(); i++) {
+
+		for (size_t j = 0; j < disjoinedSet[i].size(); j++) {
+			if (disjoinedSet[i][j] == v)
+				return disjoinedSet[i];
+		}
+	}
+	vector<Vertex *> vec;
+	return vec;
 }
 vector<vector<Vertex *> > disjointSet::getDisjoinedSet() const {
 	return disjoinedSet;
@@ -104,4 +130,3 @@ void disjointSet::createDisjoinedSet(Vertex *v, vector<Vertex *> &vec) {
 	}
 
 }
-
