@@ -26,8 +26,8 @@ Vertex::Vertex(long long in) :
 		id(in), visited(false), lat(0), lon(0), x(0), y(0) {
 }
 
-Vertex::Vertex(long long in, double lat, double lon, double x, double y) :
-		id(in), visited(false), lat(lat), lon(lon), x(x), y(y) {
+Vertex::Vertex(long long in, double lat, double lon, double x, double y,double centeredX, double centeredY) :
+		id(in), visited(false), lat(lat), lon(lon), x(x), y(y), centeredX(centeredX), centeredY(centeredY) {
 }
 
 void Vertex::addEdge(Edge e) {
@@ -238,6 +238,22 @@ double Graph::getMinLon() const {
 
 void Graph::setMinLon(double minLon) {
 	this->minLon = minLon;
+}
+
+double Graph::getCenterX() const {
+	return centerX;
+}
+
+void Graph::setCenterX(double centerX) {
+	this->centerX = centerX;
+}
+
+double Graph::getCenterY() const {
+	return centerY;
+}
+
+void Graph::setCenterY(double centerY) {
+	this->centerY = centerY;
 }
 
 Vertex* Edge::getOrig() const {

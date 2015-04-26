@@ -50,11 +50,11 @@ class Vertex {
 	bool visited;
 	double lat;
 	double lon;
-	double x;
-	double y;
+	double x, centeredX;
+	double y, centeredY;
 public:
 	Vertex(long long in);
-	Vertex(long long in, double lat, double lon, double x, double y);
+	Vertex(long long in, double lat, double lon, double x, double y, double centeredX, double centeredY);
 	friend class Graph;
 	friend bool operator==(Vertex lhs, Vertex rhs);
 	void removeVertex(const long & in);
@@ -114,6 +114,8 @@ class Graph {
 	double maxLat;
 	double minLon;
 	double maxLon;
+	double centerX;
+	double centerY;
 public:
 	vector<Vertex *> getVertexSet() const;
 	int getNumVertex() const;
@@ -139,5 +141,13 @@ public:
 	void setMinLat(double minLat);
 	double getMinLon() const;
 	void setMinLon(double minLon);
+
+	double getCenterX() const;
+
+	void setCenterX(double centerX);
+
+	double getCenterY() const;
+
+	void setCenterY(double centerY);
 };
 #endif /* SRC_GRAFO_H_ */

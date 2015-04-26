@@ -57,18 +57,33 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 	if (!nodeRead.fail()) {
 		int count = 0;
 		double x, y;
+		double minLat, maxLat, minLon, maxLon;
+		double minY, maxY, minX, maxX;
+		double centerX, centerY;
 		stringstream tempStream;
 
-		getline(nodeRead, s, ';');
 		//READING 4 FIRST NUMBERS, MIN/MAX LAT/LON
-		grafo.setMinLat(stringToDouble(s));
 		getline(nodeRead, s, ';');
-		grafo.setMaxLat(stringToDouble(s));
+		minLat = stringToDouble(s);
+		grafo.setMinLat(minLat);
 		getline(nodeRead, s, ';');
-		grafo.setMinLon(stringToDouble(s));
+		maxLat = stringToDouble(s);
+		grafo.setMaxLat(maxLat);
 		getline(nodeRead, s, ';');
-		grafo.setMaxLon(stringToDouble(s));
+		minLon = stringToDouble(s);
+		grafo.setMinLon(minLon);
+		getline(nodeRead, s, ';');
+		maxLon = stringToDouble(s);
+		grafo.setMaxLon(maxLon);
 		getline(nodeRead, s, '\n');
+
+		minX = minLon* (PI/180);
+		maxX = maxLon* (PI/180);
+		minY = minLat* (PI/180);
+		maxY = maxLat* (PI/180);
+		grafo.setCenterX((maxX-minX)/2);
+		grafo.setCenterY((maxY-minY)/2);
+
 //		cout << "A latitude min e " << grafo.getMinLat() << endl;
 //		cout << "A latitude max e " << grafo.getMaxLat() << endl;
 //		cout << "A longitude min e " << grafo.getMinLon() << endl;
@@ -90,7 +105,8 @@ void loadParse(string nodeFileName, string roadFile, string edgeFileName, Graph 
 			if (nodeRead.eof()) //This line is needed because the parser has a empty line at its end
 				break;
 
-			Vertex* vertexNew = new Vertex(idNode, lat, lon, x, y);
+			//centeredX is x-centerX -> by decreasing X by the maps center X, we can center all the points around the origin (0,0)
+			Vertex* vertexNew = new Vertex(idNode, lat, lon, x, y,x-centerX , y-centerY);
 			vertexMap.insert(pair<long long, Vertex*>(idNode, vertexNew));
 
 			cout << setprecision(10);
